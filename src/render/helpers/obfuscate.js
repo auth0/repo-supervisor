@@ -1,4 +1,3 @@
-
 module.exports = (config) => {
   const numOfChars = config.obfuscate.numOfVisibleCharacters;
 

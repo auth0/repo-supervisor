@@ -1,5 +1,5 @@
 /**
- * Calculate Shanon's entropy for a string
+ * Calculate Shannon's entropy for a string
  */
 module.exports = (str) => {
   const set = {};
