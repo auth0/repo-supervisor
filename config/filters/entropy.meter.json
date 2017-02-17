@@ -1,0 +1,12 @@
+{
+  "preFilters": [
+    "authentication.urls.js",
+    "local.paths.js",
+    "min.length.js",
+    "object.keys.identifiers.js"
+  ],
+  "options": {
+    "entropyPrecision": 4,
+    "maxAllowedEntropy": 3.5
+  }
+}

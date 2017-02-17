@@ -1,0 +1,8 @@
+{
+  "enabled": ["obfuscate.js"],
+  "options": {
+    "obfuscate": {
+      "numOfVisibleCharacters": 8
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "pullRequests": {
+    "allowedActions": ["opened", "synchronize"],
+    "allowedExtensions": [".js"]
+  }
+}

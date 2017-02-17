@@ -1,0 +1,26 @@
+{
+  "name": "repo-supervisor",
+  "version": "0.0.1",
+  "description": "Simple app",
+  "main": "src/index.js",
+  "scripts": {
+    "lint": "eslint src/ config/ --quiet",
+    "start": "wt-cli serve --parse-body --port ${PORT:-7070} --hostname ${HOST:-localhost} --secret GITHUB_TOKEN=$GITHUB_TOKEN src/index.js",
+    "validate": "npm run lint && npm outdated --depth 0"
+  },
+  "author": "radekk",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^3.15.0",
+    "eslint-config-airbnb-base": "^11.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "wt-cli": "^4.0.3"
+  },
+  "dependencies": {
+    "acorn": "^4.0.11",
+    "bluebird": "^3.4.7",
+    "github": "^8.2.1",
+    "handlebars": "^4.0.6",
+    "lodash": "^4.17.4"
+  }
+}

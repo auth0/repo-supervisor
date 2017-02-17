@@ -1,0 +1,14 @@
+[
+  {
+    "ext": ".js",
+    "filters": ["entropy.meter"],
+    "parser": {
+      "module": "parser/tokenizer/js",
+      "config": {
+        "allowReturnOutsideFunction": true,
+        "allowImportExportEverywhere": true,
+        "allowHashBang": true
+      }
+    }
+  }
+]

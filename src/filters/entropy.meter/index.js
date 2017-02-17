@@ -1,0 +1,39 @@
+const entropy = require('../../lib/entropy');
+const config = require('../../../config/filters/entropy.meter.json');
+const path = require('path');
+
+/**
+ * If rule returns TRUE then string is not removed, otherwise string is not returned on a list
+ * of secrets.
+ *
+ * return {
+ *   isError: true|false,
+ *   error: 'This is an error message.',
+ *   data: [{
+ *     string: "secret-password",
+ *     entropy: 3.5326
+ *   }]
+ * };
+ **/
+module.exports = (strings) => {
+  const error = 'The entropy level for strings is too high. It may be a result ' +
+                'of passwords or secrets stored in your files.';
+
+  // Leave only strings that were not removed by pre-filters.
+  const result = strings.filter(str => config.preFilters.reduce((acc, name) =>
+    (acc &= require(path.join(__dirname, 'pre.filters', name))(str))
+  , 1));
+
+  // Calculate entropy for every string
+  const maxEntropy = config.options.maxAllowedEntropy;
+  const data = result
+    .map(string => ({ string, entropy: +entropy(string).toFixed(config.options.entropyPrecision) }))
+    .filter(o => o.entropy > maxEntropy);
+
+  return {
+    name: 'Entropy Meter',
+    data,
+    isError: data.length > 0,
+    error: data.length > 0 ? error : null
+  };
+};

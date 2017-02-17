@@ -1,0 +1,15 @@
+<h1 class="report-title">Report - {{issues.length}} issues detected</h1>
+
+{{#issues}}
+<p>
+  <h2 class="error-title">{{filter.name}}</h2>
+  <span class="error-details">{{filter.error}}</span>
+  <hr />
+
+  {{#filter.data}}
+  <ul class="issues-list">
+    <li class="issue">entropy: <b>{{entropy}}, string: <b>{{obfuscate string}}</li>
+  </ul>
+  {{/filter.data}}
+</p>
+{{/issues}}
