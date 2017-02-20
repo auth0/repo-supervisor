@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "lint": "eslint src/ config/ --quiet",
-    "start": "wt-cli serve --parse-body --port ${PORT:-7070} --hostname ${HOST:-localhost} --secret GITHUB_TOKEN=$GITHUB_TOKEN src/index.js",
+    "start": "wt-cli serve --parse-body --port ${PORT:-7070} --hostname ${HOST:-localhost} --secret GITHUB_TOKEN=$GITHUB_TOKEN --secret JWT_SECRET=$JWT_SECRET src/index.js",
     "validate": "npm run lint && npm outdated --depth 0"
   },
   "author": "radekk",
@@ -21,6 +21,7 @@
     "bluebird": "^3.4.7",
     "github": "^8.2.1",
     "handlebars": "^4.0.6",
+    "jsonwebtoken": "^7.3.0",
     "lodash": "^4.17.4"
   }
 }

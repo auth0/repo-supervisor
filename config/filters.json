@@ -3,7 +3,7 @@
     "ext": ".js",
     "filters": ["entropy.meter"],
     "parser": {
-      "module": "parser/tokenizer/js",
+      "module": "tokenizer/js",
       "config": {
         "allowReturnOutsideFunction": true,
         "allowImportExportEverywhere": true,
