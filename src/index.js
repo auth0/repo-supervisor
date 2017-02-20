@@ -75,7 +75,10 @@ module.exports = (ctx, cb) => {
     const html = require(path.join(__dirname, 'render'))({ issues });
     cb(null, html);
   })
-  .catch(cb);
+  .catch((err) => {
+    console.error('Github API returned an error. Check privileges of your access token.');
+    cb(err);
+  });
 
   return true;
 };
