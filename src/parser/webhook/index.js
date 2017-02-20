@@ -5,7 +5,7 @@ const filtersList = require('../../../config/filters.json');
 const path = require('path');
 
 module.exports = ({
-  parse: (service, pullRequestId, owner, repo) =>
+  parse: (service, pullRequestId, owner, repo, rawOutput) =>
     // Get list of files in a specific pull request
     service.pullRequests.getFiles({ owner, repo, number: pullRequestId })
     .then((resp) => {
@@ -57,5 +57,5 @@ module.exports = ({
 
       return issues;
     })
-    .then(issues => require(path.join(__dirname, '../../render'))({ issues }))
+    .then(issues => require(path.join(__dirname, '../../render'))({ issues }, rawOutput))
 });
