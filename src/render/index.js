@@ -1,3 +1,4 @@
+const dataHelper = require('./helpers/data');
 const fs = require('fs');
 const hb = require('handlebars');
 const path = require('path');
@@ -16,5 +17,6 @@ module.exports = (data, rawOutput) => {
 
   if (rawOutput) return data;
 
-  return tpl(data);
+  // Group by filter
+  return tpl(dataHelper.groupByFilter(data.issues));
 };

@@ -24,4 +24,6 @@ module.exports = (ctx, req, res) => {
   if (config.pullRequests.allowedActions.indexOf(ctx.data.action) > -1) {
     return webhook(ctx, github, viewer, respond);
   }
+
+  return respond();
 };

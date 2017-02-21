@@ -1,15 +1,80 @@
-<h1 class="report-title">Report - {{issues.length}} issues detected</h1>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Report</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style type="text/css">
+    html {
+      position: relative;
+      min-height: 100%;
+    }
+    body {
+      margin-bottom: 60px;
+    }
+    .footer {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 60px;
+      background-color: #f5f5f5;
+    }
+    body > .container {
+      padding: 0 15px 0;
+    }
+    .container .text-muted {
+      margin: 20px 0;
+    }
+    .footer > .container {
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+    .page-header {
+      margin: 10px 0 20px;
+    }
+    code {
+      font-size: 80%;
+    }
+    </style>
+</head>
+<body>
+<div class="container">
+  <div class="page-header">
+    <h1><small>NSA - <b>N</b>ot <b>S</b>ecrets <b>A</b>llowed</small></h1>
+  </div>
 
-{{#issues}}
-<p>
-  <h2 class="error-title">{{filter.name}}</h2>
-  <span class="error-details">{{filter.error}}</span>
-  <hr />
+  {{#issues}}
+  <div class="row">
+    <h2><span class="glyphicon glyphicon-stats"></span> {{[0].filter.name}}</h2>
+    <blockquote>{{[0].filter.error}}</blockquote>
+  {{#each this}}
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading">
+        <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+        &nbsp;<a href="{{file.blob_url}}" target="_blank">{{file.filename}}</a>
+      </div>
 
-  {{#filter.data}}
-  <ul class="issues-list">
-    <li class="issue">entropy: <b>{{entropy}}, string: <b>{{obfuscate string}}</li>
-  </ul>
-  {{/filter.data}}
-</p>
-{{/issues}}
+      <!-- List group -->
+      <ul class="list-group">
+        {{#filter.data}}
+        <li class="list-group-item"><span class="badge alert-danger">{{entropy}}</span><code>{{obfuscate string}}</code></li>
+        {{/filter.data}}
+      </ul>
+    </div>
+  {{/each}}
+  </div>
+  {{else}}
+    No any issues detected.
+  {{/issues}}
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p class="text-muted">This is a work in progress. Feel free to send feedback to #crew-security or directly to @radekk.</p>
+  </div>
+</footer>
+</body>
+</html>
