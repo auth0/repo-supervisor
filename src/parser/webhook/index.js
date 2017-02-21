@@ -10,7 +10,7 @@ module.exports = ({
     service.pullRequests.getFiles({ owner, repo, number: pullRequestId })
     .then((resp) => {
       const exts = config.pullRequests.allowedExtensions;
-      const files = resp.filter(file => !exts.indexOf(path.parse(file.filename).ext));
+      const files = resp.filter(file => exts.indexOf(path.parse(file.filename).ext) > -1);
 
       return files;
     })
@@ -30,7 +30,7 @@ module.exports = ({
         let set = filtersList.filter(f => f.ext === ext);
 
         if (set.length > 1) {
-          throw new Error(`More than one object for extension "${ext}" specified in a config/filters.json.`);
+          throw new Error(`More than one object for the same extension "${ext}" specified in a config/filters.json.`);
         }
 
         set = set.pop();
@@ -44,7 +44,8 @@ module.exports = ({
             // of strings.
             const strings = require(path.join(__dirname, '../', set.parser.module))(
               content,
-              set.parser.config || {});
+              set.parser.config || {}
+            );
 
             filteredData = filter(strings);
           } else {

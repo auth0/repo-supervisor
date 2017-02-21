@@ -10,5 +10,16 @@
         "allowHashBang": true
       }
     }
+  },
+  {
+    "ext": ".json",
+    "filters": ["entropy.meter"],
+    "parser": {
+      "module": "tokenizer/json",
+      "config": {
+        "checkObjectKeys": true,
+        "checkObjectValues": true
+      }
+    }
   }
 ]
