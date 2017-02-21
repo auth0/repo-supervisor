@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = (config) => {
   const numOfChars = config.obfuscate.numOfVisibleCharacters;
 

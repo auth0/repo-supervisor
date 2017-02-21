@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Remove strings which look like object keys but leave its values.
  * Example:

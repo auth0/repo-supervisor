@@ -1,3 +1,5 @@
+'use strict';
+
 const entropy = require('../../lib/entropy');
 const config = require('../../../config/filters/entropy.meter.json');
 const path = require('path');

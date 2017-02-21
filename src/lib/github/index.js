@@ -1,3 +1,5 @@
+'use strict';
+
 const Github = require('github');
 
 module.exports = (apiToken) => {

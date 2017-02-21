@@ -1,3 +1,5 @@
+'use strict';
+
 const webhook = require('./parser/webhook');
 
 module.exports = (ctx, github, viewer, res) => {

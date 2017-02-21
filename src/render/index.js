@@ -1,3 +1,5 @@
+'use strict';
+
 const dataHelper = require('./helpers/data');
 const fs = require('fs');
 const hb = require('handlebars');

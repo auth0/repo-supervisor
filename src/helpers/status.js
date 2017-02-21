@@ -1,3 +1,5 @@
+'use strict';
+
 const config = require('../../config/main.json');
 
 module.exports = (service, options) => {

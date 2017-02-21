@@ -1,3 +1,5 @@
+'use strict';
+
 const minStrLength = 15;
 
 /**
