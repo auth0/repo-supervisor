@@ -1,9 +1,15 @@
 'use strict';
 
 const config = require('../config/main.json');
+const url = require('url');
 const webhook = require('./parser/webhook');
 
-module.exports = (ctx, github, viewer, res) => {
+module.exports = (ctx, req, github, viewer, res) => {
+  const wtURL = url.format({
+    protocol: req.headers['x-forwarded-proto'],
+    host: req.headers.host,
+    pathname: req.url
+  });
   const repository = {
     name: ctx.data.repository.name,
     owner: ctx.data.repository.owner.login,
@@ -27,7 +33,7 @@ module.exports = (ctx, github, viewer, res) => {
   ).then(data =>
     status.setPending(config.statusMessages.pending).then(() => {
       const reportURL = viewer.getReportURL(
-        repository.pullRequestId, repository.owner, repository.name
+        wtURL, repository.pullRequestId, repository.owner, repository.name
       );
 
       if (data.issues.length > 0) return status.setError(config.statusMessages.error, reportURL);

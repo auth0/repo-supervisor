@@ -1,4 +1,5 @@
-const config = require('../../config/viewer.json');
+'use strict';
+
 const Promise = require('bluebird').Promise;
 const token = require('./helpers/jwt.js');
 
@@ -20,10 +21,8 @@ module.exports = (secret, service) => ({
 
     return Promise.resolve(null);
   },
-  getReportURL: (pullRequestId, owner, repo) => {
+  getReportURL: (url, pullRequestId, owner, repo) => {
     const id = token.create({ pullRequestId, owner, repo }, secret);
-    const url = config.url;
-
     return `${url}/?id=${id}`;
   }
 });
