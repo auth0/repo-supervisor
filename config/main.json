@@ -3,5 +3,10 @@
   "pullRequests": {
     "allowedActions": ["opened", "synchronize"],
     "allowedExtensions": [".js", ".json"]
+  },
+  "statusMessages": {
+    "error": "Security issues detected, check report for details.",
+    "pending": "We are scanning, please wait...",
+    "success": "No security issues were found, well done!"
   }
 }

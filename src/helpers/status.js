@@ -15,8 +15,8 @@ module.exports = (service, options) => {
 
   return {
     setError: (msg, url) => setStatus('error', msg, url),
-    setFailure: msg => setStatus('failure', msg),
-    setPending: msg => setStatus('pending', msg),
-    setSuccess: msg => setStatus('success', msg)
+    setFailure: (msg, url) => setStatus('failure', msg, url),
+    setPending: (msg, url) => setStatus('pending', msg, url),
+    setSuccess: (msg, url) => setStatus('success', msg, url)
   };
 };

@@ -1,5 +1,6 @@
 'use strict';
 
+const config = require('../config/main.json');
 const webhook = require('./parser/webhook');
 
 module.exports = (ctx, github, viewer, res) => {
@@ -24,15 +25,14 @@ module.exports = (ctx, github, viewer, res) => {
     repository.name,
     true
   ).then(data =>
-    status.setPending('Checking for security issues...').then(() => {
-      if (data.issues.length > 0) {
-        return status.setError(
-          'Security issues were detected.',
-          viewer.getReportURL(repository.pullRequestId, repository.owner, repository.name)
-        );
-      }
+    status.setPending(config.statusMessages.pending).then(() => {
+      const reportURL = viewer.getReportURL(
+        repository.pullRequestId, repository.owner, repository.name
+      );
 
-      return status.setSuccess('Everything looks fine, no issues detected.');
+      if (data.issues.length > 0) return status.setError(config.statusMessages.error, reportURL);
+
+      return status.setSuccess(config.statusMessages.success, reportURL);
     }).then(res)
       .catch(err => status.setFailure(err.toString()).then(res))
   ).catch(err => res(err.toString()));
