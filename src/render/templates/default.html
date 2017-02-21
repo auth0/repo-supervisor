@@ -67,13 +67,16 @@
   {{/each}}
   </div>
   {{else}}
-    No any issues detected.
+    <div class="alert alert-success" role="alert">
+      <span class="glyphicon glyphicon-ok"></span>
+      <strong>Well done!</strong> Our tests were successful and no issues were found.
+    </div>
   {{/issues}}
 </div>
 
 <footer class="footer">
   <div class="container">
-    <p class="text-muted">This is a work in progress. Feel free to send feedback to #crew-security or directly to @radekk.</p>
+    <p class="text-muted">This is a <strong>work in progress</strong> tool that looks for passwords and secrets. Feel free to send feedback to #crew-security or directly to @radekk.</p>
   </div>
 </footer>
 </body>

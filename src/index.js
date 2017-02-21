@@ -18,7 +18,7 @@ module.exports = (ctx, req, res) => {
 
   if (ctx.data.id) {
     // Viewer request.
-    return viewer.getReportContent(ctx.data.id).then(respond).catch(err => {
+    return viewer.getReportContent(ctx.data.id).then(respond).catch((err) => {
       console.error(err);
       respond();
     });
