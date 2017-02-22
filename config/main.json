@@ -1,5 +1,5 @@
 {
-  "name": "NSA",
+  "name": "Supervisor",
   "pullRequests": {
     "allowedActions": ["opened", "synchronize"],
     "allowedExtensions": [".js", ".json"]
