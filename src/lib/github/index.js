@@ -1,6 +1,4 @@
-'use strict';
-
-const Github = require('github');
+import Github from 'github';
 
 module.exports = (apiToken) => {
   const client = new Github({

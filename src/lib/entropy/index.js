@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Calculate Shannon's entropy for a string
  */

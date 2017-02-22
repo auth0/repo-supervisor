@@ -1,6 +1,4 @@
-'use strict';
-
-const _ = require('lodash');
+import { invert, flatten, uniq } from 'lodash';
 
 /**
  * Return an array of all strings from JSON file.
@@ -17,7 +15,7 @@ module.exports = (content, config) => {
   }
 
   if (config.checkObjectKeys) result.push(Object.keys(json));
-  if (config.checkObjectValues) result.push(Object.keys(_.invert(json)));
+  if (config.checkObjectValues) result.push(Object.keys(invert(json)));
 
-  return _.uniq(_.flatten(result));
+  return uniq(flatten(result));
 };

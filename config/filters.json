@@ -1,9 +1,9 @@
 [
   {
     "ext": ".js",
-    "filters": ["entropy.meter"],
+    "filters": ["entropy.meter/index.js"],
     "parser": {
-      "module": "tokenizer/js",
+      "module": "tokenizer/js/index.js",
       "config": {
         "allowReturnOutsideFunction": true,
         "allowImportExportEverywhere": true,
@@ -13,9 +13,9 @@
   },
   {
     "ext": ".json",
-    "filters": ["entropy.meter"],
+    "filters": ["entropy.meter/index.js"],
     "parser": {
-      "module": "tokenizer/json",
+      "module": "tokenizer/json/index.js",
       "config": {
         "checkObjectKeys": true,
         "checkObjectValues": true

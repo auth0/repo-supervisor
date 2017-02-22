@@ -1,7 +1,6 @@
-'use strict';
-
-const Promise = require('bluebird').Promise;
-const token = require('./helpers/jwt.js');
+import { Promise } from 'bluebird';
+import token from './helpers/jwt';
+import webhook from './../webhook';
 
 module.exports = (secret, service) => ({
   getReportContent: (id) => {
@@ -9,9 +8,7 @@ module.exports = (secret, service) => ({
 
     if (data !== null) {
       // TODO check cache entries.
-      const wh = require('../parser/webhook');
-
-      return wh.parse(
+      return webhook.parse(
         service,
         data.pullRequestId,
         data.owner,

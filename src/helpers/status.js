@@ -1,6 +1,4 @@
-'use strict';
-
-const config = require('../../config/main.json');
+import config from './../../config/main.json';
 
 module.exports = (service, options) => {
   const setStatus = (state, description, url) => service.repos.createStatus({

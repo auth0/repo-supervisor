@@ -1,21 +1,16 @@
-'use strict';
+// import hb from 'handlebars';
+import dataHelper from './helpers/data';
 
-const dataHelper = require('./helpers/data');
-const fs = require('fs');
-const hb = require('handlebars');
-const path = require('path');
-
-const src = fs.readFileSync(path.join(__dirname, 'templates/default.html'), 'utf-8');
-const tpl = hb.compile(src);
+const tpl = require('./templates/default.handlebars');
 
 module.exports = (data, rawOutput) => {
   // Register helpers
-  const helpers = require(path.join(__dirname, '../../config/render/helpers.json'));
+  // const helpers = require('./../../config/render/helpers.json');
 
-  helpers.enabled.forEach((cfg) => {
-    const helper = require(path.join(__dirname, 'helpers', cfg))(helpers.options);
-    hb.registerHelper(helper.name, helper.cb);
-  });
+  // helpers.enabled.forEach((cfg) => {
+  //   const helper = require(`./templates/helpers/${cfg}`)(helpers.options);
+  //   hb.registerHelper(helper.name, helper.cb);
+  // });
 
   if (rawOutput) return data;
 

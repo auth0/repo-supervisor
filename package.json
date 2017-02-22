@@ -1,27 +1,37 @@
 {
   "name": "repo-supervisor",
   "version": "0.0.1",
-  "description": "Simple app",
+  "description": "Scan your code for security misconfigurations, search for passwords and secrets.",
   "main": "src/index.js",
   "scripts": {
+    "build": "webpack --config config/webpack.js",
+    "deploy": "npm run build && wt-cli create --name 'repo-supervisor' --parse-body --secret GITHUB_TOKEN=$GITHUB_TOKEN --secret JWT_SECRET=$JWT_SECRET dist/webtask.js",
     "lint": "eslint src/ config/ --quiet",
-    "start": "wt-cli serve --parse-body --port ${PORT:-7070} --hostname ${HOST:-localhost} --secret GITHUB_TOKEN=$GITHUB_TOKEN --secret JWT_SECRET=$JWT_SECRET src/index.js",
-    "validate": "npm run lint && npm outdated --depth 0"
+    "logs": "wt-cli logs",
+    "start": "wt-cli serve --parse-body --port ${PORT:-7070} --hostname ${HOST:-localhost} --secret GITHUB_TOKEN=$GITHUB_TOKEN --secret JWT_SECRET=$JWT_SECRET dist/webtask.js",
+    "validate": "npm run lint && npm outdated --depth 0",
+    "watch": "webpack --config config/webpack.js --watch --bail --display-error-details"
   },
   "author": "radekk",
   "license": "MIT",
   "devDependencies": {
+    "babel-core": "^6.23.1",
+    "babel-eslint": "^7.1.1",
+    "babel-loader": "^6.3.2",
+    "babel-preset-es2015": "^6.22.0",
     "eslint": "^3.15.0",
     "eslint-config-airbnb-base": "^11.1.0",
-    "eslint-plugin-import": "^2.2.0",
-    "wt-cli": "^4.0.3"
+    "eslint-plugin-import": "^2.2.0"
   },
   "dependencies": {
     "acorn": "^4.0.11",
     "bluebird": "^3.4.7",
     "github": "^8.2.1",
     "handlebars": "^4.0.6",
+    "handlebars-loader": "^1.4.0",
     "jsonwebtoken": "^7.3.0",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "webpack": "^2.2.1",
+    "webpack-node-externals": "^1.5.4"
   }
 }

@@ -1,6 +1,4 @@
-'use strict';
-
-const url = require('url');
+import url from 'url';
 
 /**
  * Skip all URLs but leave those with authentication parameters.

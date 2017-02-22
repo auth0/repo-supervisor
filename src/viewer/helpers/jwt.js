@@ -1,6 +1,4 @@
-'use strict';
-
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 
 module.exports = ({
   create: (data, secret) => jwt.sign(data, secret),

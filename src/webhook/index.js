@@ -1,8 +1,6 @@
-'use strict';
-
-const config = require('../../../config/main.json');
-const filtersList = require('../../../config/filters.json');
-const path = require('path');
+import path from 'path';
+import config from './../../config/main.json';
+import filtersList from './../../config/filters.json';
 
 module.exports = ({
   parse: (service, pullRequestId, owner, repo, rawOutput) =>
@@ -35,14 +33,14 @@ module.exports = ({
 
         set = set.pop();
         set.filters.forEach((filterName) => {
-          const filter = require(path.join(__dirname, '../../filters/', filterName));
+          const filter = require(`filters/${filterName}`);
           const content = new Buffer(file.blob.content, 'base64').toString();
           let filteredData = {};
 
           if ('parser' in set) {
             // Apply parser before running a filtering functions. Parser needs to return an array
             // of strings.
-            const strings = require(path.join(__dirname, '../', set.parser.module))(
+            const strings = require(`parser/${set.parser.module}`)(
               content,
               set.parser.config || {}
             );
@@ -58,5 +56,5 @@ module.exports = ({
 
       return issues;
     })
-    .then(issues => require(path.join(__dirname, '../../render'))({ issues }, rawOutput))
+    .then(issues => require('../render/index.js')({ issues }, rawOutput))
 });

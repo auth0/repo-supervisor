@@ -1,8 +1,6 @@
-'use strict';
-
-const config = require('../config/main.json');
-const url = require('url');
-const webhook = require('./parser/webhook');
+import url from 'url';
+import config from './../../../config/main.json';
+import webhook from './../';
 
 module.exports = (ctx, req, github, viewer, res) => {
   const wtURL = url.format({
@@ -18,7 +16,7 @@ module.exports = (ctx, req, github, viewer, res) => {
   };
 
   // Webhook trigger.
-  const status = require('./helpers/status')(github, {
+  const status = require('./../../helpers/status')(github, {
     repo: repository.name,
     user: repository.owner,
     sha: repository.pullRequestSHA

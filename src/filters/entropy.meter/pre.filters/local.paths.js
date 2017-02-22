@@ -1,6 +1,4 @@
-'use strict';
-
-const path = require('path');
+import path from 'path';
 
 /**
  * Skip strings where there is a file or directory path.
