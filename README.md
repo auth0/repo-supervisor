@@ -4,15 +4,38 @@
     <p><strong>Repo-supervisor</strong> is a serverless tool that detects secrets and passwords in your pull requests - on file at a time.</p>
 </div>
 
-<h2 align="center">Installation</h2>
+<h2 align="center">Setup</h2>
 
-The recommended way is to clone this repository and install required dependencies:
+The recommended way is to clone this repository, install required dependencies and run script to install a webtask.
 
 ```bash
-git clone git@github.com:auth0/repo-supervisor.git
-cd repo-supervisor
-npm install
+ git clone git@github.com:auth0/repo-supervisor.git
+ cd repo-supervisor
+
+ npm install
+ GITHUB_TOKEN=<token> JWT_SECRET=<secret> npm deploy
 ```
+
+To build webtask script manually:
+
+```bash
+npm run build
+```
+
+It will generate ready to upload and minified `dist/webtask.js` file.
+
+<h2 align="center">Webhook</h2>
+
+Installing webhook is easy and there is no difference to other webhooks provided by i.e. Zapier or IFTTT.
+
+Before installing a webhook you need to build and install this tool. As a result `npm deploy` should return the URL address to your deployed webtask. Point your **Payload URL** to webtask url and you're ready to go.
+
+<div style="text-align:center"><img src="docs/webhook.setup.png"/></div>
+
+> Which events would you like to trigger this webhook?
+
+- [x] Let me select individual events.
+- [x] Pull request
 
 <h2 align="center">Requirements</h2>
 
@@ -32,9 +55,10 @@ It happens sometimes that you can commit secrets or passwords to your repository
 
 This tool allows you to setup a `webhook` that waits for the Pull Requests and scans all interesting files to check for leaked secrets. Every time PR is updated it rescans latest changes and generates a report.
 
-![](docs/report.preview.png)
+<div style="text-align:center"><img src="docs/report.preview.png"/></div>
 
-<h2 align="center">Supported tests</h2>
+
+<h2 align="center">Security checks</h2>
 
 Tool is easily extendable by adding new filter and parsers for a specific format, for now we support `json` and `js` parsing.
 
