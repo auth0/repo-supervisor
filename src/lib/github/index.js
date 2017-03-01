@@ -2,7 +2,7 @@ import Github from 'github';
 
 module.exports = (apiToken) => {
   const client = new Github({
-    version: 3,
+    version: '3.0.0',
     debug: false,
     protocol: 'https',
     host: 'api.github.com',
