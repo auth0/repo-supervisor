@@ -39,5 +39,5 @@ module.exports = (ctx, req, github, viewer, res) => {
       return status.setSuccess(config.statusMessages.success, reportURL);
     }).then(res)
       .catch(err => status.setFailure(err.toString()).then(res))
-  ).catch(err => res(err.toString()));
+  ).catch(err => res(err.stack));
 };
