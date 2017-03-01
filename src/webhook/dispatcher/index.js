@@ -2,6 +2,8 @@ import url from 'url';
 import config from './../../../config/main.json';
 import webhook from './../';
 
+const SUCCESS_RESPONSE = 'OK';
+
 module.exports = (ctx, req, github, viewer, res) => {
   const wtURL = url.format({
     protocol: req.headers['x-forwarded-proto'],
@@ -28,16 +30,19 @@ module.exports = (ctx, req, github, viewer, res) => {
     repository.owner,
     repository.name,
     true
-  ).then(data =>
-    status.setPending(config.statusMessages.pending).then(() => {
-      const reportURL = viewer.getReportURL(
-        wtURL, repository.pullRequestId, repository.owner, repository.name
-      );
+  ).then(data => status.setPending(config.statusMessages.pending).then(() => {
+    const reportURL = viewer.getReportURL(
+      wtURL, repository.pullRequestId, repository.owner, repository.name
+    );
 
-      if (data.issues.length > 0) return status.setError(config.statusMessages.error, reportURL);
+    if (data.issues.length > 0) return status.setError(config.statusMessages.error, reportURL);
 
-      return status.setSuccess(config.statusMessages.success, reportURL);
-    }).then(res)
-      .catch(err => status.setFailure(err.toString()).then(res))
-  ).catch(err => res(err.stack));
+    return status.setSuccess(config.statusMessages.success, reportURL);
+  }))
+  .then(() => res(SUCCESS_RESPONSE))
+  .catch((err) => {
+    status.setFailure(err.toString()).finally(() => {
+      res(err.stack);
+    });
+  });
 };
