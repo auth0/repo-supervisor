@@ -6,7 +6,7 @@
 
 <h2 align="center">Setup</h2>
 
-The recommended way is to clone this repository, install required dependencies and run script to install a webtask.
+The recommended way is to clone this repository, install required dependencies and run script to deploy a script on the webtask.io platform.
 
 ```bash
  git clone git@github.com:auth0/repo-supervisor.git
@@ -16,13 +16,9 @@ The recommended way is to clone this repository, install required dependencies a
  GITHUB_TOKEN=<token> JWT_SECRET=<secret> npm deploy
 ```
 
-To build webtask script manually:
+After script was deployed it will return a URL address to your webtask which then you can use to setup a webhook.
 
-```bash
-npm run build
-```
-
-It will generate ready to upload and minified `dist/webtask.js` file.
+_If you want to deploy webtask with profile different than a standard one you should set env. variable called `WT_PROFILE=myprofile` just before or right after `GITHUB_TOKEN` variable._
 
 <h2 align="center">Webhook</h2>
 
@@ -96,3 +92,21 @@ Forwarding                    https://b1942011.ngrok.io -> localhost:7070
 3\. Setup webhook URL so it points to `ngrok` URL.
 
 [Ngrok](https://ngrok.com/) is a really useful tool, it allows you to inspect **every** request send to your ngrok's endpoint so you can verify data in/out.
+
+
+<h2 align="center">Dependencies</h2>
+
+All required dependencies are enforced in specific versions on the webtask.io platform by using metadata setting.
+
+```bash
+--meta wt-node-dependencies=$(./bin/get.wt.deps.sh)
+```
+
+_get.wt.deps.sh_ script returns a list of dependencies extracted from `package.json` file.
+
+```bash
+→ ./bin/get.wt.deps.sh
+{"acorn":"4.0.11","bluebird":"3.4.7","github":"8.2.1","handlebars":"4.0.6","handlebars-loader":"1.4.0","jsonwebtoken":"7.3.0","lodash":"4.17.4"}
+```
+
+Without the enforcement policy it would break the installation since older version of libraries are not compatible with current code.
