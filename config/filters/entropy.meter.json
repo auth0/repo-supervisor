@@ -3,6 +3,7 @@
     "authentication.urls.js",
     "local.paths.js",
     "min.length.js",
+    "multiple.words.js",
     "object.keys.identifiers.js"
   ],
   "options": {
