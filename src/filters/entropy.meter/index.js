@@ -17,7 +17,7 @@ import config from './../../../config/filters/entropy.meter.json';
 module.exports = (strings) => {
   const error = 'The entropy level for strings is too high. It may be a result ' +
                 'of passwords or secrets stored in your files. Check files listed ' +
-                'together with highlighted secrets.';
+                'together with highlighted strings.';
 
   // Leave only strings that were not removed by pre-filters.
   const result = strings.filter(str => config.preFilters.reduce((acc, name) =>
