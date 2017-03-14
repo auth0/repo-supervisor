@@ -1,10 +1,13 @@
 {
   "preFilters": [
     "authentication.urls.js",
+    "css.selectors.js",
+    "email.addresses.js",
     "local.paths.js",
     "min.length.js",
     "multiple.words.js",
-    "object.keys.identifiers.js"
+    "object.keys.identifiers.js",
+    "skip.prefixes.js"
   ],
   "options": {
     "entropyPrecision": 4,
