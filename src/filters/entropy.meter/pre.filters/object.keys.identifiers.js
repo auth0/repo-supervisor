@@ -8,4 +8,4 @@
  * To remove false positives we need to get rid off object keys.
  * It will not detect secrets in a form of "FOO_BAR_SECRET_ABCD".
  **/
-module.exports = s => !s.match(/^([A-Z]+_){1,}[A-Z]+$/g);
+module.exports = s => !s.match(/^([A-Z0-9]+_){1,}[A-Z0-9]+$/);
