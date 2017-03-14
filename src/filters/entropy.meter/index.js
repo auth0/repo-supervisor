@@ -21,7 +21,7 @@ module.exports = (strings) => {
 
   // Leave only strings that were not removed by pre-filters.
   const result = strings.filter(str => config.preFilters.reduce((acc, name) =>
-    (acc &= require(`./pre.filters/${name}`)(str))
+    (acc &= require(`./pre.filters/${name}`)(str, config))
   , 1));
 
   // Calculate entropy for every string
