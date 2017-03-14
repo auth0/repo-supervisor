@@ -8,6 +8,11 @@
   ],
   "options": {
     "entropyPrecision": 4,
-    "maxAllowedEntropy": 3.5
+    "maxAllowedEntropy": 4,
+    "preFilters": {
+      "skipPrefixes": [
+        "flags.", "oauth2-", "Username-", "tests-"
+      ]
+    }
   }
 }
