@@ -6,7 +6,16 @@ import { defaults, uniq } from 'lodash';
  **/
 module.exports = (code, config) => {
   const tokens = [];
-  tokenizer.parse(code, defaults({ onToken: tokens }, config));
+
+  try {
+    tokenizer.parse(code, defaults({ onToken: tokens }, config));
+  } catch (e) {
+    /**
+     * Error when parsing JS file.
+     * @TODO fallback to parse whole file as a single blob.
+     **/
+    return [];
+  }
 
   return uniq(
     // Return only unique values of 'string' type objects.
