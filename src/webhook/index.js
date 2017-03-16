@@ -8,7 +8,13 @@ module.exports = ({
     service.pullRequests.getFiles({ owner, repo, number: pullRequestId })
     .then((resp) => {
       const exts = config.pullRequests.allowedExtensions;
-      const files = resp.filter(file => exts.indexOf(path.parse(file.filename).ext) > -1);
+      const paths = config.pullRequests.excludedPaths;
+      const files = resp.filter(file => exts.indexOf(path.parse(file.filename).ext) > -1)
+                        .filter((file) => {
+                          const dir = path.parse(file.filename).dir;
+                          const len = paths.length;
+                          return paths.filter(r => !file.filename.match(RegExp(r))).length === len;
+                        });
 
       return files;
     })

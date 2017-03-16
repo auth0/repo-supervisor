@@ -2,7 +2,8 @@
   "name": "Supervisor",
   "pullRequests": {
     "allowedActions": ["opened", "synchronize"],
-    "allowedExtensions": [".js", ".json"]
+    "allowedExtensions": [".js", ".json"],
+    "excludedPaths": ["^test"]
   },
   "statusMessages": {
     "error": "Security issues detected, check report for details.",
