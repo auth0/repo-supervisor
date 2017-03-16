@@ -37,7 +37,7 @@ module.exports = {
         drop_debugger: true,
         conditionals: true,
         evaluate: true,
-        drop_console: true, // strips console statements
+        drop_console: false, // strips console statements
         sequences: true,
         booleans: true
       }
