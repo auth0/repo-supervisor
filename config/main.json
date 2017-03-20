@@ -3,8 +3,10 @@
   "pullRequests": {
     "allowedActions": ["opened", "synchronize"],
     "allowedExtensions": [".js", ".json"],
-    "excludedPaths": ["^test"]
+    "excludedPaths": ["^test"],
+    "updateGithubStatus": true
   },
+  "runTriggers": true,
   "statusMessages": {
     "error": "Security issues detected, check report for details.",
     "pending": "We are scanning, please wait...",

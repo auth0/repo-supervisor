@@ -21,7 +21,7 @@ module.exports = (ctx, req, res) => {
       .then(respond)
       .catch((err) => {
         console.error(err);
-        respond();
+        respond('Could not process report URL.');
       });
   }
 
@@ -29,5 +29,5 @@ module.exports = (ctx, req, res) => {
     return dispatcher(ctx, req, service, view, respond);
   }
 
-  return respond();
+  return respond('Payload not processed, invalid type.');
 };
