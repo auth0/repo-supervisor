@@ -34,6 +34,7 @@
     "handlebars": "^4.0.6",
     "handlebars-loader": "^1.4.0",
     "jsonwebtoken": "^7.3.0",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "request-promise": "^4.1.1"
   }
 }
