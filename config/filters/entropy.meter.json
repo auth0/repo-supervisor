@@ -14,7 +14,7 @@
     "maxAllowedEntropy": 4,
     "preFilters": {
       "skipPrefixes": [
-        "flags.", "oauth2-", "Username-", "tests-", "?connection="
+        "flags.", "oauth2-", "Username-", "tests-", "?connection=", "account.", "enable"
       ]
     }
   }
