@@ -1,7 +1,7 @@
 import { Promise } from 'bluebird';
 import url from 'url';
-import config from './../../../config/main.json';
-import trigger from './../../triggers/slack';
+import config from './../../config/main.json';
+import trigger from './../triggers/slack';
 import webhook from './../';
 
 const SUCCESS_RESPONSE = 'OK';
@@ -21,7 +21,7 @@ module.exports = (ctx, req, github, viewer, res) => {
   const updateCIStatus = config.pullRequests.updateGithubStatus;
 
   // Webhook trigger.
-  const status = require('./../../helpers/status')(github, {
+  const status = require('./../helpers/status')(github, {
     repo: r.name,
     user: r.owner,
     sha: r.pullRequestSHA

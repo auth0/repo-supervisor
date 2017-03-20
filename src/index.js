@@ -3,7 +3,7 @@ import assert from 'assert';
 import config from './../config/main.json';
 import github from './lib/github';
 import viewer from './viewer';
-import dispatcher from './webhook/dispatcher';
+import dispatcher from './dispatcher';
 
 module.exports = (ctx, req, res) => {
   assert(ctx.data, 'Invalid request - missing query parameters.');
