@@ -18,8 +18,8 @@ module.exports = (secret, service) => ({
 
     return Promise.resolve(null);
   },
-  getReportURL: (url, pullRequestId, owner, repo) => {
-    const id = token.create({ pullRequestId, owner, repo }, secret);
+  getReportURL: (url, pullRequestId, pullRequestSHA, owner, repo) => {
+    const id = token.create({ pullRequestId, pullRequestSHA, owner, repo }, secret);
     return `${url}/?id=${id}`;
   }
 });

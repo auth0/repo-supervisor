@@ -26,6 +26,21 @@ module.exports = (ctx, req, res) => {
       trigger(`:white_check_mark: Report acknowledged: ${prUrl}`);
     } else {
       trigger(`:-1: Report rejected: ${prUrl}`);
+
+      const status = require('./helpers/status')(service, {
+        repo: data.repo,
+        user: data.owner,
+        sha: data.pullRequestSHA
+      });
+
+      // Make PR green again if report was rejected.
+      return status.setSuccess(
+        `[rejected] ${config.statusMessages.success}`, url.getWebtaskURL(req)
+      ).finally(() =>
+        respond(JSON.stringify({
+          success: true
+        }))
+      );
     }
 
     return respond(JSON.stringify({

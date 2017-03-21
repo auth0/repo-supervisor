@@ -15,8 +15,6 @@ module.exports = (ctx, req, github, viewer, res) => {
     pullRequestSHA: ctx.data.pull_request.head.sha
   };
   const updateCIStatus = config.pullRequests.updateGithubStatus;
-
-  // Webhook trigger.
   const status = require('./../helpers/status')(github, {
     repo: r.name,
     user: r.owner,
@@ -32,7 +30,9 @@ module.exports = (ctx, req, github, viewer, res) => {
   })
   .then(() => webhook.parse(github, r.pullRequestId, r.owner, r.name, true))
   .then((data) => {
-    const reportURL = viewer.getReportURL(wtURL, r.pullRequestId, r.owner, r.name);
+    const reportURL = viewer.getReportURL(
+      wtURL, r.pullRequestId, r.pullRequestSHA, r.owner, r.name
+    );
 
     if (data.issues.length > 0) {
       if (config.runTriggers) {
