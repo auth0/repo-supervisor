@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Report</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <style type="text/css">
     html {
       position: relative;
@@ -37,6 +38,12 @@
     code {
       font-size: 80%;
     }
+    .report-confirm {
+      margin-bottom: 10px;
+    }
+    .report-confirm > button {
+      margin-left: 5px;
+    }
     </style>
 </head>
 <body>
@@ -44,6 +51,22 @@
   <div class="page-header">
     <h1><small>Security report</small></h1>
   </div>
+
+  {{#if issues}}
+  <div class="report-confirm">
+    <p>Is this report accurate?</p>
+
+    <button type="button" class="btn btn-default btn-success btn-sm action-yes">
+      <span class="glyphicon glyphicon-thumbs-up"></span> YES
+    </button>
+
+    <button type="button" class="btn btn-default btn-warning btn-sm action-no">
+      <span class="glyphicon glyphicon-thumbs-down"></span> NO
+    </button>
+  </div>
+
+  <div class="alert notify" role="alert">&nbsp;</div>
+  {{/if}}
 
   {{#issues}}
   <div class="row">
@@ -79,5 +102,53 @@
     <p class="text-muted">This is a <strong>work in progress</strong> tool. Feel free to send feedback to #crew-security or directly to @radekk.</p>
   </div>
 </footer>
+
+<script type="text/javascript">
+  const btnYes = $('.action-yes');
+  const btnNo = $('.action-no');
+  const endpoint = window.location.href;
+  const elNotify = $('.notify');
+
+  function setStatus(status) {
+    switch (status) {
+      case 'error':
+        elNotify.attr('class', 'alert-danger');
+        elNotify.text('It failed, contact us directly, thanks!');
+        break;
+
+      case 'pending':
+        elNotify.attr('class', 'alert-warning');
+        elNotify.text('Sending report status...');
+        break;
+
+      case 'success':
+        elNotify.attr('class', 'alert-success');
+        elNotify.text('Thanks for letting us know!');
+        break;
+    }
+
+    ['alert', 'notify'].forEach(cl => elNotify.addClass(cl));
+  }
+
+  function ackReport(isValid) {
+    setStatus('pending');
+
+    $.getJSON(endpoint + '&ack_report=' + (isValid ? 1 : 0), (data) => {
+      if (data && data.success) {
+        return setStatus('success');
+      }
+    }).fail(() => setStatus('error'));
+  }
+
+  if (btnYes && btnNo) {
+    btnYes.click(() => {
+      ackReport(true);
+    });
+
+    btnNo.click(() => {
+      ackReport(false);
+    });
+  }
+</script>
 </body>
 </html>

@@ -4,6 +4,9 @@ import config from './../config/main.json';
 import github from './lib/github';
 import viewer from './viewer';
 import dispatcher from './dispatcher';
+import token from './helpers/jwt';
+import trigger from './triggers/slack';
+import url from './helpers/url';
 
 module.exports = (ctx, req, res) => {
   assert(ctx.data, 'Invalid request - missing query parameters.');
@@ -14,6 +17,21 @@ module.exports = (ctx, req, res) => {
   const respond = data => res.end(typeof data !== 'string' ? '' : data);
   const service = github(ctx.secrets.GITHUB_TOKEN);
   const view = viewer(ctx.secrets.JWT_SECRET, service);
+
+  if (typeof ctx.data.ack_report !== 'undefined' && config.runTriggers) {
+    const data = token.decode(ctx.data.id, ctx.secrets.JWT_SECRET);
+    const prUrl = url.getPullRequestURLFromJWT(data);
+
+    if (ctx.data.ack_report === '1') {
+      trigger(`:white_check_mark: Report acknowledged: ${prUrl}`);
+    } else {
+      trigger(`:-1: Report rejected: ${prUrl}`);
+    }
+
+    return respond(JSON.stringify({
+      success: true
+    }));
+  }
 
   if (ctx.data.id) {
     // Viewer request.
