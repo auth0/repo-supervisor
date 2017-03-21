@@ -1,5 +1,5 @@
 import { Promise } from 'bluebird';
-import token from './helpers/jwt';
+import token from './../helpers/jwt';
 import webhook from './../webhook';
 
 module.exports = (secret, service) => ({

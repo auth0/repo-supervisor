@@ -1,17 +1,13 @@
 import { Promise } from 'bluebird';
-import url from 'url';
+import url from './../helpers/url';
 import config from './../../config/main.json';
 import trigger from './../triggers/slack';
-import webhook from './../';
+import webhook from './../webhook';
 
 const SUCCESS_RESPONSE = 'OK';
 
 module.exports = (ctx, req, github, viewer, res) => {
-  const wtURL = url.format({
-    protocol: req.headers['x-forwarded-proto'],
-    host: req.headers.host,
-    pathname: req.url
-  });
+  const wtURL = url.getWebtaskURL(req);
   const r = {
     name: ctx.data.repository.name,
     owner: ctx.data.repository.owner.login,
@@ -40,7 +36,9 @@ module.exports = (ctx, req, github, viewer, res) => {
 
     if (data.issues.length > 0) {
       if (config.runTriggers) {
-        trigger(`${r.owner}/${r.name}`, reportURL);
+        // TODO check if status did change
+        const prUrl = url.getPullRequestURL(`${r.owner}/${r.name}`, r.pullRequestId);
+        trigger(`:warning: Secrets detected in: ${prUrl}`);
       }
 
       if (updateCIStatus) {

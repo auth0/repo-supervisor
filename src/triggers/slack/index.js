@@ -1,11 +1,11 @@
 import req from 'request-promise';
 import config from './../../../.config.json';
 
-module.exports = (repo, reportURL) => {
+module.exports = (message) => {
   // req.debug = true;
 
   const payload = JSON.stringify({
-    text: `Secrets detected in *${repo}*: ${reportURL}`
+    text: message
   });
 
   const options = {
