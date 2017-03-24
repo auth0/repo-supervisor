@@ -53,6 +53,12 @@ This tool allows you to setup a `webhook` that waits for the Pull Requests and s
 
 <div style="text-align:center"><img src="docs/report.preview.png"/></div>
 
+Both acknowledge and rejection actions are triggering Slack notification which allows to whether improve or fix secrets detection rules.
+
+**Acknowledge** report (YES): Approve that report as valid, detected strings are actual secrets.
+
+**Reject** report (NO): Reject report, detected secrets are not credentials but only object identifiers, messages or other not related strings. It will help to improve the false-positives ratio.
+
 
 <h2 align="center">Security checks</h2>
 
