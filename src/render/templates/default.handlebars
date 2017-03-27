@@ -74,16 +74,14 @@
   {{#issues}}
   <div class="row">
     <h2><span class="glyphicon glyphicon-stats"></span> {{[0].filter.name}}</h2>
-    <blockquote>{{[0].filter.error}}</blockquote>
+    <blockquote>{{{[0].filter.error}}}</blockquote>
   {{#each this}}
     <div class="panel panel-default">
-      <!-- Default panel contents -->
       <div class="panel-heading">
         <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
         &nbsp;<a href="{{file.blob_url}}" target="_blank">{{file.filename}}</a>
       </div>
 
-      <!-- List group -->
       <ul class="list-group">
         {{#filter.data}}
         <li class="list-group-item"><span class="badge alert-danger">{{entropy}}</span><code>{{obfuscate string}}</code></li>
