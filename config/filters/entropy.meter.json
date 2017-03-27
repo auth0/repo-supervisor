@@ -1,4 +1,7 @@
 {
+  "errors": {
+    "description": "The entropy level for strings is too high. It may be a result of passwords or secrets stored in your files. Check files listed together with highlighted strings. Migrate any detected secrets - <a href='https://wiki.it.auth0.com/doku.php?id=wiki:teams:security:howtos:secure_secret_storage'>secure storage manual</a>."
+  },
   "preFilters": [
     "authentication.urls.js",
     "css.selectors.js",
