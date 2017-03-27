@@ -15,7 +15,7 @@ import config from './../../../config/filters/entropy.meter.json';
  * };
  **/
 module.exports = (strings) => {
-  const error = config.errors.description;
+  const error = config.errors.general;
 
   // Leave only strings that were not removed by pre-filters.
   const result = strings.filter(str => config.preFilters.reduce((acc, name) =>
