@@ -24,8 +24,6 @@ module.exports = (ctx, req, res) => {
 
     if (ctx.data.ack_report === '1') {
       trigger(`:white_check_mark: Report acknowledged: ${prUrl}`);
-    } else {
-      trigger(`:-1: Report rejected: ${prUrl}`);
 
       const status = require('./helpers/status')(service, {
         repo: data.repo,
@@ -42,6 +40,8 @@ module.exports = (ctx, req, res) => {
         }))
       );
     }
+
+    trigger(`:-1: Report rejected: ${prUrl}`);
 
     return respond(JSON.stringify({
       success: true
