@@ -1,6 +1,6 @@
 import path from 'path';
 import config from './../../config/main.json';
-import filtersList from './../../config/filters.json';
+import filters from './../filters';
 
 module.exports = ({
   parse: (service, pullRequestId, owner, repo, rawOutput) =>
@@ -29,34 +29,8 @@ module.exports = ({
         delete file.meta.patch;
         delete file.meta.contents_url;
 
-        const ext = path.parse(file.meta.filename).ext;
-        let set = filtersList.filter(f => f.ext === ext);
-
-        if (set.length > 1) {
-          throw new Error(`More than one object for the same extension "${ext}" specified in a config/filters.json.`);
-        }
-
-        set = set.pop();
-        set.filters.forEach((filterName) => {
-          const filter = require(`filters/${filterName}`);
-          const content = new Buffer(file.blob.content, 'base64').toString();
-          let filteredData = {};
-
-          if ('parser' in set) {
-            // Apply parser before running a filtering functions. Parser needs to return an array
-            // of strings.
-            const strings = require(`parser/${set.parser.module}`)(
-              content,
-              set.parser.config || {}
-            );
-
-            filteredData = filter(strings);
-          } else {
-            filteredData = filter(content);
-          }
-
-          if (filteredData.isError) issues.push({ file: file.meta, filter: filteredData });
-        });
+        const issuesDetails = filters.processFile(file.meta, file.blob.content);
+        issues.push(issuesDetails);
       });
 
       return issues;
