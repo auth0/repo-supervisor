@@ -2,11 +2,16 @@ const nodeExternals = require('webpack-node-externals');
 const path = require('path');
 const webpack = require('webpack');
 
+const distPath = path.join(__dirname, '../dist');
+
 module.exports = {
-  entry: './src/index.js',
+  entry: {
+    cli: './src/cli.js',
+    webtask: './src/index.js'
+  },
   output: {
-    path: path.join(__dirname, '../dist'),
-    filename: 'webtask.js',
+    path: distPath,
+    filename: '[name].js',
     libraryTarget: 'commonjs2'
   },
   target: 'async-node',
