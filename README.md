@@ -4,7 +4,7 @@
     <p><strong>Repo-supervisor</strong> is a serverless tool that detects secrets and passwords in your pull requests - on file at a time.</p>
 </div>
 
-<h2 align="center">Setup</h2>
+## Setup
 
 The recommended way is to clone this repository, install required dependencies and run script to deploy a script on the webtask.io platform.
 
@@ -20,7 +20,7 @@ After script was deployed it will return a URL address to your webtask which the
 
 _If you want to deploy webtask with profile different than a standard one you should set env. variable called `WT_PROFILE=myprofile` just before or right after `GITHUB_TOKEN` variable._
 
-<h2 align="center">Webhook</h2>
+## Webhook
 
 Installing webhook is easy and there is no difference to other webhooks provided by i.e. Zapier or IFTTT.
 
@@ -33,7 +33,7 @@ Before installing a webhook you need to build and install this tool. As a result
 - [x] Let me select individual events.
 - [x] Pull request
 
-<h2 align="center">Requirements</h2>
+## Requirements
 
 After installing all required packages with `npm` the one additional tool is `wt-cli` to communicate with [webtask.io](https://webtask.io).
 
@@ -45,7 +45,7 @@ Installation process:
 npm install -g wt-cli
 ```
 
-<h2 align="center">Introduction</h2>
+## Introduction
 
 It happens sometimes that you can commit secrets or passwords to your repository by accident. The recommended best practice is not commit the secrets, that's obvious. But not always that obvious when you have a big merge waiting to be reviewed.
 
@@ -60,13 +60,13 @@ Both acknowledge and rejection actions are triggering Slack notification which a
 **Reject** report (NO): Reject report, detected secrets are not credentials but only object identifiers, messages or other not related strings. It will help to improve the false-positives ratio.
 
 
-<h2 align="center">Security checks</h2>
+## Security checks
 
 Tool is easily extendable by adding new filter and parsers for a specific format, for now we support `json` and `js` parsing.
 
 - **Entropy Meter** - measures the level of entropy for extracted strings. The higher the entropy the higher probability of detecting a secret/password.
 
-<h2 align="center">Testing</h2>
+## Testing
 
 Testing this tool is super easy without a need to install the actual source code on the webtask platform.
 
@@ -100,7 +100,7 @@ Forwarding                    https://b1942011.ngrok.io -> localhost:7070
 [Ngrok](https://ngrok.com/) is a really useful tool, it allows you to inspect **every** request send to your ngrok's endpoint so you can verify data in/out.
 
 
-<h2 align="center">Dependencies</h2>
+## Dependencies
 
 All required dependencies are enforced in specific versions on the webtask.io platform by using metadata setting.
 
@@ -116,3 +116,41 @@ _get.wt.deps.sh_ script returns a list of dependencies extracted from `package.j
 ```
 
 Without the enforcement policy it would break the installation since older version of libraries are not compatible with current code.
+
+## What is Auth0?
+
+Auth0 helps you to:
+
+* Add authentication with [multiple authentication sources](https://docs.auth0.com/identityproviders),
+either social like **Google, Facebook, Microsoft Account, LinkedIn, GitHub, Twitter, Box, Salesforce,
+amont others**, or enterprise identity systems like **Windows Azure AD, Google Apps, Active Directory,
+ADFS or any SAML Identity Provider**.
+* Add authentication through more traditional
+**[username/password databases](https://docs.auth0.com/mysql-connection-tutorial)**.
+* Add support for **[linking different user accounts](https://docs.auth0.com/link-accounts)** with
+the same user.
+* Support for generating signed [Json Web Tokens](https://docs.auth0.com/jwt) to call your APIs and
+**flow the user identity** securely.
+* Analytics of how, when and where users are logging in.
+* Pull data from other sources and add it to the user profile, through
+[JavaScript rules](https://docs.auth0.com/rules).
+
+## Create a free account in Auth0
+
+1. Go to [Auth0](https://auth0.com) and click Sign Up.
+2. Use Google, GitHub or Microsoft Account to login.
+
+## Issue Reporting
+
+If you have found a bug or if you have a feature request, please report them at this repository
+issues section. Please do not report security vulnerabilities on the public GitHub issue tracker.
+The [Responsible Disclosure Program](https://auth0.com/whitehat) details the procedure for
+disclosing security issues.
+
+## Author
+
+[Auth0](https://auth0.com)
+
+## License
+
+This project is licensed under the MIT license. See the [LICENSE](LICENSE) file for more info.
