@@ -4,6 +4,15 @@
     <p><strong>Repo-supervisor</strong> is a serverless tool that detects secrets and passwords in your pull requests - on file at a time.</p>
 </div>
 
+## Command line mode
+
+To start using tool without setting up webhooks etc. you can start scanning local directories right after downloading the source code:
+
+```bash
+npm run build
+npm run cli ./src/
+```
+
 ## Setup
 
 The recommended way is to clone this repository, install required dependencies and run script to deploy a script on the webtask.io platform.
