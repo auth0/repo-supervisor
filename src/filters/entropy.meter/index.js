@@ -17,14 +17,18 @@ import config from './../../../config/filters/entropy.meter.json';
 module.exports = (strings) => {
   const error = config.errors.general;
 
-  // Leave only strings that were not removed by pre-filters.
-  const result = strings.filter(str => config.preFilters.reduce((acc, name) =>
-    (acc &= require(`./pre.filters/${name}`)(str, config))
+  /**
+   * Leave only strings that were not removed by pre-filters.
+   * All filters need to return True for a string otherwise string is skipped
+   * from further processing.
+   */
+  const stringsForProcessing = strings.filter(str => config.preFilters.reduce((acc, name) =>
+    (acc &= require(`./pre.filters/${name}`)(str, config.options.preFilters))
   , 1));
 
   // Calculate entropy for every string
   const maxEntropy = config.options.maxAllowedEntropy;
-  const data = result
+  const data = stringsForProcessing
     .map(string => ({ string, entropy: +entropy(string).toFixed(config.options.entropyPrecision) }))
     .filter(o => o.entropy > maxEntropy);
 
