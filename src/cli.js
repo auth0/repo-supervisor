@@ -16,14 +16,14 @@ const walk = (dir) => {
 };
 
 if (process.argv.length < 3) {
-  console.info('Usage: npm run cli <directory>');
+  console.log('Usage: npm run cli <directory>');
   process.exit();
 }
 
 const dir = process.argv[2];
 
 if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) {
-  console.error(`"${dir}" is not a valid directory.`);
+  console.log(`"${dir}" is not a valid directory.`);
   process.exit();
 }
 
@@ -31,7 +31,7 @@ const files = walk(dir);
 const filesDetected = {};
 
 if (files.length <= 0) {
-  console.error('Not found any files that could be tested.');
+  console.log('Not found any files that could be tested.');
   process.exit();
 }
 
@@ -40,12 +40,12 @@ files.forEach((file) => {
   if (result.length > 0) filesDetected[file] = result[0].filter.data.map(o => o.string);
 });
 
-if (filesDetected.length <= 0) {
-  console.error('Not detected any secrets in files.');
+if (Object.keys(filesDetected).length <= 0) {
+  console.log('Not detected any secrets in files.');
   process.exit();
 }
 
-console.log('===== Potential secrets has been detected: =====');
+console.log('===== Potential secrets have been detected: =====');
 
 Object.keys(filesDetected).forEach((prop) => {
   console.log(`[${prop}]`);
