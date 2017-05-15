@@ -1,0 +1,39 @@
+{
+  "validCSSSelectors": [
+    "#foo-bar",
+    "#foo.bar",
+    "#foo_bar",
+    
+    ".foo-bar",
+    ".foo_bar",
+    ".foo.bar",
+    
+    "#foo[value='bar']",
+    "#foo[value=\"bar\"]",
+    "#foo[value^='bar']",
+    "#foo[value^=\"bar\"]",
+    
+    ".foo[value='bar']",
+    ".foo[value=\"bar\"]",
+    ".foo[value^='bar']",
+    ".foo[value^=\"bar\"]",
+    
+    "input[value='bar']",
+    "input[value=\"bar\"]",
+    "button[value^='bar']",
+    "button[value^=\"bar\"]",
+
+    "[value='bar']",
+    "[value=\"bar\"]",
+    "[value^='bar']",
+    "[value^=\"bar\"]",
+
+    "foo>bar",
+    "#foo>bar",
+    "#foo>.bar",
+    "#foo>#bar",
+    ".foo>bar",
+    ".foo>#bar",
+    ".foo>.bar"
+  ]
+}

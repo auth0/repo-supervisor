@@ -1,0 +1,10 @@
+{
+  "validLocalPaths": [
+    "/etc/foo/bar",
+    "./etc/foobar/",
+    "../../etc/foobar",
+    "./../etc/foo/bar",
+    "//etc/foobar",
+    "./../etc/foo//bar//"
+  ]
+}

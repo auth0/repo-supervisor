@@ -1,0 +1,12 @@
+{
+  "validEmailAddresses": [
+    "john.doe@example.com",
+    "john.doe+test@example.com",
+    "john+doe@example.com",
+    "john.doe@example.museum",
+    "john.doe+test@example.museum",
+    "john.doe_test+foobar@example.com",
+    "john@example.museum",
+    "john@doe.example.com"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "multipleWords": [
+    "foo bar",
+    "foo bar foo",
+    "foo       bar",
+    "fo1o    bar  fo4o       bar",
+    "fOO bAr FOO bar"
+  ],
+  "singleWords": [
+    "foo",
+    "bar",
+    "T3st",
+    "fooBar",
+    "FoObAr"
+  ]
+}

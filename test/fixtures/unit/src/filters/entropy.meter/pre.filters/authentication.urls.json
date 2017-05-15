@@ -1,0 +1,20 @@
+{
+  "urlsWithoutAuthParams": [
+    "http://www.google.com/",
+    "https://www.google.com/",
+    "ftp://localhost:21/",
+    "http://www.google.com/test:foobar@/abc"
+  ],
+  "urlsWithAuthParams": [
+    "http://john:doe@www.google.com/",
+    "https://john:doe@www.google.com/",
+    "ftp://john:doe@localhost:21/",
+    "http://john:doe@www.google.com/test:foobar@/abc"
+  ],
+  "urlsWithEmptyAuthParams": [
+    "http://:@www.google.com/",
+    "https://:@www.google.com/",
+    "ftp://:@localhost:21/",
+    "http://:@www.google.com/test:foobar@/abc"
+  ]
+}
