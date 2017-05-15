@@ -1,12 +1,12 @@
 <div align="center">
 	<img src="https://cdn.auth0.com/styleguide/latest/lib/logos/img/logo-grey.png" alt="auth0" width="90px"/>
     <br/><br/>
-    <p><strong>Repo-supervisor</strong> is a serverless tool that detects secrets and passwords in your pull requests - on file at a time.</p>
+    <p><strong>Repo-supervisor</strong> is a serverless tool that detects secrets and passwords in your pull requests - one file at a time.</p>
 </div>
 
 ## Command line mode
 
-To start using tool without setting up webhooks etc. you can start scanning local directories right after downloading the source code:
+To start using the tool without setting up webhooks etc. you can scan local directories right after downloading the source code:
 
 ```bash
 npm run build
@@ -31,7 +31,7 @@ _If you want to deploy webtask with profile different than a standard one you sh
 
 ## Webhook
 
-Installing webhook is easy and there is no difference to other webhooks provided by i.e. Zapier or IFTTT.
+Installing a webhook is easy and there is no difference to other webhooks provided by i.e. Zapier or IFTTT.
 
 Before installing a webhook you need to build and install this tool. As a result `npm deploy` should return the URL address to your deployed webtask. Point your **Payload URL** to webtask url and you're ready to go.
 
@@ -44,9 +44,9 @@ Before installing a webhook you need to build and install this tool. As a result
 
 ## Requirements
 
-After installing all required packages with `npm` the one additional tool is `wt-cli` to communicate with [webtask.io](https://webtask.io).
+After installing all the required packages with `npm`, so will also need to install the `wt-cli` to communicate with [webtask.io](https://webtask.io).
 
-If you don't have an account then create a new one, **it's free**. All details related to `wt-cli` are available in the [documentation](https://webtask.io/docs/wt-cli).
+If you don't have an account then create a new one, **it's free**. All the details related to `wt-cli` are available in the [documentation](https://webtask.io/docs/wt-cli).
 
 Installation process:
 
@@ -56,28 +56,28 @@ npm install -g wt-cli
 
 ## Introduction
 
-It happens sometimes that you can commit secrets or passwords to your repository by accident. The recommended best practice is not commit the secrets, that's obvious. But not always that obvious when you have a big merge waiting to be reviewed.
+Unfortunately, sometimes you may accidently commit secrets or passwords to your repository. The recommended best practice is not to commit the secrets, that's obvious. But it's not always obvious when you have a complex PR waiting to be reviewed.
 
-This tool allows you to setup a `webhook` that waits for the Pull Requests and scans all interesting files to check for leaked secrets. Every time PR is updated it rescans latest changes and generates a report.
+This tool allows you to setup a `webhook` that waits for the Pull Requests and scans all interesting files to check for leaked secrets. Every time the PR is updated it rescans the latest changes and generates a report.
 
 <div style="text-align:center"><img src="docs/report.preview.png"/></div>
 
-Both acknowledge and rejection actions are triggering Slack notification which allows to whether improve or fix secrets detection rules.
+Both acknowledge and reject actions trigger Slack notification which allows you to improve or fix secrets detection rules.
 
-**Acknowledge** report (YES): Approve that report as valid, detected strings are actual secrets.
+**Acknowledge** report (YES): Accept the report, the detected strings are secrets.
 
-**Reject** report (NO): Reject report, detected secrets are not credentials but only object identifiers, messages or other not related strings. It will help to improve the false-positives ratio.
+**Reject** report (NO): Reject report, detected secrets are not credentials but only object identifiers, messages or other not related strings. It will help to improve the false-positive ratio.
 
 
 ## Security checks
 
-Tool is easily extendable by adding new filter and parsers for a specific format, for now we support `json` and `js` parsing.
+Repo-supervisor can be easily extended by adding a new filter and parsers for a specific format. We currently support `json` and `js` parsing.
 
 - **Entropy Meter** - measures the level of entropy for extracted strings. The higher the entropy the higher probability of detecting a secret/password.
 
 ## Testing
 
-Testing this tool is super easy without a need to install the actual source code on the webtask platform.
+Testing this tool is super easy as there is no need to install the actual source code on the webtask platform.
 
 1\. Start local wt-cli server
 
@@ -106,12 +106,12 @@ Forwarding                    https://b1942011.ngrok.io -> localhost:7070
 
 3\. Setup webhook URL so it points to `ngrok` URL.
 
-[Ngrok](https://ngrok.com/) is a really useful tool, it allows you to inspect **every** request send to your ngrok's endpoint so you can verify data in/out.
+[Ngrok](https://ngrok.com/) is a really useful tool, it allows you to inspect **every** request sent to your ngrok's endpoint so you can verify data in/out.
 
 
 ## Dependencies
 
-All required dependencies are enforced in specific versions on the webtask.io platform by using metadata setting.
+All required dependencies are enforced in specific versions on the webtask.io platform by using the metadata setting.
 
 ```bash
 --meta wt-node-dependencies=$(./bin/get.wt.deps.sh)
@@ -124,7 +124,7 @@ _get.wt.deps.sh_ script returns a list of dependencies extracted from `package.j
 {"acorn":"4.0.11","bluebird":"3.4.7","github":"8.2.1","handlebars":"4.0.6","handlebars-loader":"1.4.0","jsonwebtoken":"7.3.0","lodash":"4.17.4"}
 ```
 
-Without the enforcement policy it would break the installation since older version of libraries are not compatible with current code.
+The installation could potentially be broken without the enforcement policy as older versions of the libraries are not compatible with the current code.
 
 ## What is Auth0?
 
