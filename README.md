@@ -1,8 +1,8 @@
-<div align="center">
-	<img src="https://cdn.auth0.com/styleguide/latest/lib/logos/img/logo-grey.png" alt="auth0" width="90px"/>
-    <br/><br/>
-    <p><strong>Repo-supervisor</strong> is a serverless tool that detects secrets and passwords in your pull requests - on file at a time.</p>
-</div>
+# Repo-supervisor
+
+Serverless tool that detects secrets and passwords in your pull requests - on file at a time.
+
+[![Build Status](https://travis-ci.org/auth0/repo-supervisor.svg?branch=master)](https://travis-ci.org/auth0/repo-supervisor)
 
 ## Command line mode
 
