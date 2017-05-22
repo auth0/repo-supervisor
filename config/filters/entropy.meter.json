@@ -1,0 +1,25 @@
+{
+  "errors": {
+    "general": "The entropy level for strings is too high. It may be a result of passwords or secrets stored in your files. Check files listed together with highlighted strings. Migrate any detected secrets."
+  },
+  "preFilters": [
+    "authentication.urls.js",
+    "css.selectors.js",
+    "email.addresses.js",
+    "local.paths.js",
+    "min.length.js",
+    "multiple.words.js",
+    "object.keys.identifiers.js",
+    "skip.prefixes.js"
+  ],
+  "options": {
+    "entropyPrecision": 4,
+    "maxAllowedEntropy": 4,
+    "preFilters": {
+      "skipPrefixes": [
+        "test-", "foobar-"
+      ],
+      "minStringLength": 15
+    }
+  }
+}

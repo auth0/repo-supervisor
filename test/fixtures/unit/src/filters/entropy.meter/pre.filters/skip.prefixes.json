@@ -1,0 +1,30 @@
+{
+  "prefixes": [
+    "foobar",
+    "foo_bar",
+    "foo-bar",
+    "?foobar",
+    "?_FOO_BAR_"
+  ],
+  "shouldMatchPrefixes": [
+    "foobar-hello",
+    "foo_bar-example",
+    "foo-bar_hello",
+    "?foobar",
+    "?_FOO_BAR_hEllO"
+  ],
+  "shouldNotMatchPrefixes": [
+    "hello",
+    "fooobar",
+    "hello-foobar",
+    "hello-foo_bar",
+    "world-foo-bar",
+    "example_?foobar",
+    "example?_FOO_BAR_"
+  ],
+  "withoutPrefixes": [
+    "hello",
+    "world",
+    "Example"
+  ]
+}

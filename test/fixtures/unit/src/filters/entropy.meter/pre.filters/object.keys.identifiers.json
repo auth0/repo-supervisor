@@ -1,0 +1,12 @@
+{
+  "objectKeys": [
+    "FOO_BAR_SECRET",
+    "AMAZON_ACCESS_KEY",
+    "SLACK_ACCESS_KEY"
+  ],
+  "notObjectKeys": [
+    "foobar",
+    "example",
+    "fooBarExample"
+  ]
+}

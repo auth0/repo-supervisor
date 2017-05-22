@@ -1,0 +1,25 @@
+[
+  {
+    "ext": ".js",
+    "filters": ["entropy.meter/index.js"],
+    "parser": {
+      "module": "tokenizer/js/index.js",
+      "config": {
+        "allowReturnOutsideFunction": true,
+        "allowImportExportEverywhere": true,
+        "allowHashBang": true
+      }
+    }
+  },
+  {
+    "ext": ".json",
+    "filters": ["entropy.meter/index.js"],
+    "parser": {
+      "module": "tokenizer/json/index.js",
+      "config": {
+        "checkObjectKeys": true,
+        "checkObjectValues": true
+      }
+    }
+  }
+]
