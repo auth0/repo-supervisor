@@ -4,6 +4,9 @@ Serverless tool that detects secrets and passwords in your pull requests - on fi
 
 [![Build Status](https://travis-ci.org/auth0/repo-supervisor.svg?branch=master)](https://travis-ci.org/auth0/repo-supervisor)
 
+
+<div style="text-align:center"><img src="docs/report.preview.png"/></div>
+
 ## Command line mode
 
 To start using tool without setting up webhooks etc. you can start scanning local directories right after downloading the source code:
@@ -59,8 +62,6 @@ npm install -g wt-cli
 It happens sometimes that you can commit secrets or passwords to your repository by accident. The recommended best practice is not commit the secrets, that's obvious. But not always that obvious when you have a big merge waiting to be reviewed.
 
 This tool allows you to setup a `webhook` that waits for the Pull Requests and scans all interesting files to check for leaked secrets. Every time PR is updated it rescans latest changes and generates a report.
-
-<div style="text-align:center"><img src="docs/report.preview.png"/></div>
 
 Both acknowledge and rejection actions are triggering Slack notification which allows to whether improve or fix secrets detection rules.
 
