@@ -1,6 +1,6 @@
 # Repo-supervisor
 
-Serverless tool that detects secrets and passwords in your pull requests - on file at a time.
+Serverless tool that detects secrets and passwords in your pull requests - one file at a time.
 
 [![Build Status](https://travis-ci.org/auth0/repo-supervisor.svg?branch=master)](https://travis-ci.org/auth0/repo-supervisor)
 
