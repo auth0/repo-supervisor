@@ -3,6 +3,10 @@ import filtersList from './../../config/filters.json';
 
 module.exports = {
   processFile: (metadata, fileContent, isPlainFile) => {
+    if (!fileContent || fileContent.length === 0) {
+      return [];
+    }
+
     const ext = path.parse(metadata.filename).ext;
     const issues = [];
     let set = filtersList.filter(f => f.ext === ext);

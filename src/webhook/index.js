@@ -1,3 +1,4 @@
+import { flatten } from 'lodash';
 import path from 'path';
 import config from './../../config/main.json';
 import filters from './../filters';
@@ -9,7 +10,7 @@ module.exports = ({
     .then((resp) => {
       const exts = config.pullRequests.allowedExtensions;
       const paths = config.pullRequests.excludedPaths;
-      const files = resp.filter(file => exts.indexOf(path.parse(file.filename).ext) > -1)
+      const files = resp.data.filter(file => exts.indexOf(path.parse(file.filename).ext) > -1)
                         .filter((file) => {
                           const len = paths.length;
                           return paths.filter(r => !file.filename.match(RegExp(r))).length === len;
@@ -18,7 +19,7 @@ module.exports = ({
       return files;
     })
     .map(file => service.gitdata.getBlob({ owner, repo, sha: file.sha }).then(
-      content => ({ blob: content, meta: file })
+      resp => ({ blob: resp.data, meta: file })
     ))
     .then((files) => {
       // Apply filters specific for file types
@@ -30,10 +31,12 @@ module.exports = ({
         delete file.meta.contents_url;
 
         const issuesDetails = filters.processFile(file.meta, file.blob.content);
-        issues.push(issuesDetails);
+        if (issuesDetails.length > 0) {
+          issues.push(issuesDetails);
+        }
       });
 
-      return issues;
+      return flatten(issues);
     })
     .then(issues => require('../render/index.js')({ issues }, rawOutput))
 });
