@@ -17,6 +17,29 @@ npm run build
 npm run cli ./src/
 ```
 
+**JSON output**
+
+To trigger JSON format for the output report you need to set `JSON_OUTPUT=1` environment variable.
+
+```bash
+→ JSON_OUTPUT=1 node ./dist/cli.js ./test/fixtures/integration/dir.with.secrets/foo/ | jq
+{
+  "result": {
+    "./test/fixtures/integration/dir.with.secrets/foo//bar.js": [
+      "zJd-55qmsY6LD53CRTqnCr_g-",
+      "gm5yb-hJWRoS7ZJTi_YUj_tbU",
+      "GxC56B6x67anequGYNPsW_-TL",
+      "MLTk-BuGS8s6Tx9iK5zaL8a_W",
+      "2g877BA_TsE-WoPoWrjHah9ta"
+    ],
+    "./test/fixtures/integration/dir.with.secrets/foo//foo.json": [
+      "d7kyociU24P9hJ_sYVkqzo-kE",
+      "q28Wt3nAmLt_3NGpqi2qz-jQ7"
+    ]
+  }
+}
+```
+
 ## Setup
 
 The recommended way is to clone this repository, install required dependencies and run script to deploy a script on the webtask.io platform.

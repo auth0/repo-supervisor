@@ -1,6 +1,7 @@
 import fs from 'fs';
 import filters from './filters';
 
+const isJSON = !!process.env.JSON_OUTPUT;
 const walk = (dir) => {
   let results = [];
   const list = fs.readdirSync(dir);
@@ -15,24 +16,34 @@ const walk = (dir) => {
   return results;
 };
 
+const throwError = (message) => {
+  if (isJSON) {
+    const output = {
+      error: message
+    };
+    console.log(JSON.stringify(output));
+  } else {
+    console.log(message);
+  }
+
+  process.exit(1);
+};
+
 if (process.argv.length < 3) {
-  console.log('Usage: npm run cli <directory>');
-  process.exit();
+  throwError('Usage: npm run cli <directory>');
 }
 
 const dir = process.argv[2];
 
 if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) {
-  console.log(`"${dir}" is not a valid directory.`);
-  process.exit();
+  throwError(`"${dir}" is not a valid directory.`);
 }
 
 const files = walk(dir);
 const filesDetected = {};
 
 if (files.length <= 0) {
-  console.log('Not found any files that could be tested.');
-  process.exit();
+  throwError('Not found any files that could be tested.');
 }
 
 files.forEach((file) => {
@@ -41,7 +52,15 @@ files.forEach((file) => {
 });
 
 if (Object.keys(filesDetected).length <= 0) {
-  console.log('Not detected any secrets in files.');
+  throwError('Not detected any secrets in files.');
+}
+
+if (isJSON) {
+  const output = {
+    result: filesDetected
+  };
+
+  console.log(JSON.stringify(output));
   process.exit();
 }
 

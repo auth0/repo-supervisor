@@ -6,8 +6,22 @@ describe('Scenario: Run tool in CLI mode to detect secrets', () => {
     const msg = 'Not detected any secrets in files.';
 
     exec(`node ./dist/cli.js ${dir}`, (error, stdout) => {
-      expect(error).to.be.null;
+      expect(error.code).to.be.equal(1);
       expect(stdout.trim()).to.be.equal(msg);
+      cb();
+    });
+  });
+
+  it('should return an error in JSON format when triggered in JSON mode', (cb) => {
+    const dir = './test/fixtures/integration/dir.without.any.files.to.test';
+    const msg = 'Not detected any secrets in files.';
+
+    exec(`JSON_OUTPUT=1 node ./dist/cli.js ${dir}`, (error, stdout) => {
+      const jsonResult = JSON.parse(stdout);
+
+      expect(error.code).to.be.equal(1);
+      expect(jsonResult.error.trim()).to.be.equal(msg);
+      expect(Object.keys(jsonResult).length).to.be.equal(1);
       cb();
     });
   });
@@ -17,7 +31,7 @@ describe('Scenario: Run tool in CLI mode to detect secrets', () => {
     const msg = 'Not detected any secrets in files.';
 
     exec(`node ./dist/cli.js ${dir}`, (error, stdout) => {
-      expect(error).to.be.null;
+      expect(error.code).to.be.equal(1);
       expect(stdout.trim()).to.be.equal(msg);
       cb();
     });
@@ -39,6 +53,17 @@ describe('Scenario: Run tool in CLI mode to detect secrets', () => {
 >> q28Wt3nAmLt_3NGpqi2qz-jQ7`;
 
     exec(`node ./dist/cli.js ${dir}`, (error, stdout) => {
+      expect(error).to.be.null;
+      expect(stdout.trim()).to.be.equal(msg);
+      cb();
+    });
+  });
+
+  it('should detect secrets in supported files when in JSON mode', (cb) => {
+    const dir = './test/fixtures/integration/dir.with.secrets';
+    const msg = '{"result":{"./test/fixtures/integration/dir.with.secrets/foo/bar.js":["zJd-55qmsY6LD53CRTqnCr_g-","gm5yb-hJWRoS7ZJTi_YUj_tbU","GxC56B6x67anequGYNPsW_-TL","MLTk-BuGS8s6Tx9iK5zaL8a_W","2g877BA_TsE-WoPoWrjHah9ta"],"./test/fixtures/integration/dir.with.secrets/foo/foo.json":["d7kyociU24P9hJ_sYVkqzo-kE","q28Wt3nAmLt_3NGpqi2qz-jQ7"]}}';
+
+    exec(`JSON_OUTPUT=1 node ./dist/cli.js ${dir}`, (error, stdout) => {
       expect(error).to.be.null;
       expect(stdout.trim()).to.be.equal(msg);
       cb();
