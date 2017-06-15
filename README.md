@@ -12,7 +12,7 @@ Serverless tool that detects secrets and passwords in your pull requests - one f
 To start using tool without setting up webhooks etc. you can start scanning local directories right after downloading the source code:
 
 ```bash
-npm install
+npm install --no-optional
 npm run build
 npm run cli ./src/
 ```
