@@ -42,7 +42,7 @@
     "request": "^2.81.0",
     "request-promise": "^4.2.1"
   },
-"optionalDependencies": {
+  "optionalDependencies": {
     "fsevents": "*"
   }
 }
