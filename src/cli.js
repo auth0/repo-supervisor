@@ -51,9 +51,9 @@ files.forEach((file) => {
   if (result.length > 0) filesDetected[file] = result[0].filter.data.map(o => o.string);
 });
 
-if (Object.keys(filesDetected).length <= 0) {
-  throwError('Not detected any secrets in files.');
-}
+// if (Object.keys(filesDetected).length <= 0) {
+//   throwError('Not detected any secrets in files.');
+// }
 
 if (isJSON) {
   const output = {
