@@ -55,13 +55,15 @@ files.forEach((file) => {
 //   throwError('Not detected any secrets in files.');
 // }
 
-if (isJSON) {
+if (Object.keys(filesDetected).length > 0) {
+  if (isJSON) {
   const output = {
     result: filesDetected
   };
 
   console.log(JSON.stringify(output));
   process.exit();
+}
 }
 
 console.log('===== Potential secrets have been detected: =====');
