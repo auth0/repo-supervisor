@@ -66,7 +66,7 @@ if (Object.keys(filesDetected).length > 0) {
 }
 }
 
-console.log('===== Potential secrets have been detected: =====');
+
 
 Object.keys(filesDetected).forEach((prop) => {
   console.log(`[${prop}]`);
