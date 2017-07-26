@@ -4,7 +4,7 @@ import { flatten, uniq } from 'lodash';
  * Workaround for not yet released lodash 5.0.
  *
  * Issue: https://github.com/auth0/repo-supervisor/issues/7
- **/
+ */
 const invert = (object) => {
   const toString = Object.prototype.toString;
   const result = {};
@@ -25,7 +25,7 @@ const invert = (object) => {
 /**
  * Return an array of all strings from JSON file.
  * TODO parse nested objects.
- **/
+ */
 module.exports = (content, config) => {
   const result = [];
   let json;

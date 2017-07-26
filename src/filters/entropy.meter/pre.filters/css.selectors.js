@@ -4,7 +4,7 @@
  * Example <[entropy] : selector>:
  * - [3.70] .disable-user-selection
  * - [3.50] #username-input
- **/
+ */
 
 /* eslint no-useless-escape: "off" */
 const regex = new RegExp(

@@ -1,3 +1,4 @@
+/* eslint no-return-assign: "off" */
 import entropy from './../../lib/entropy';
 import config from './../../../config/filters/entropy.meter.json';
 
@@ -13,7 +14,7 @@ import config from './../../../config/filters/entropy.meter.json';
  *     entropy: 3.5326
  *   }]
  * };
- **/
+ */
 module.exports = (strings) => {
   const error = config.errors.general;
 
@@ -21,6 +22,7 @@ module.exports = (strings) => {
    * Leave only strings that were not removed by pre-filters.
    * All filters need to return True for a string otherwise string is skipped
    * from further processing.
+   *
    */
   const stringsForProcessing = strings.filter(str => config.preFilters.reduce((acc, name) =>
     (acc &= require(`./pre.filters/${name}`)(str, config.options.preFilters))
