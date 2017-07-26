@@ -1,5 +1,5 @@
 const tokenizer = require(`${global.srcPath}/parser/tokenizer/json/index.js`);
-const config = {checkObjectKeys: true, checkObjectValues: true};
+const config = { checkObjectKeys: true, checkObjectValues: true };
 
 /**
  * Issue: https://github.com/auth0/repo-supervisor/issues/7
