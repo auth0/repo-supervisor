@@ -32,12 +32,12 @@
     "wt-cli": "^6.1.0"
   },
   "dependencies": {
-    "acorn": "^5.0.3",
+    "acorn": "^5.1.1",
     "bluebird": "^3.5.0",
     "github": "^9.2.0",
-    "handlebars": "^4.0.8",
+    "handlebars": "^4.0.10",
     "handlebars-loader": "^1.5.0",
-    "jsonwebtoken": "^7.4.0",
+    "jsonwebtoken": "^7.4.1",
     "lodash": "^4.17.4",
     "request": "^2.81.0",
     "request-promise": "^4.2.1"
