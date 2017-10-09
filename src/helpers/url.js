@@ -1,10 +1,11 @@
 import url from 'url';
 
 const githubURL = 'https://github.com';
+const protocol = 'https';
 
 module.exports = {
   getWebtaskURL: req => url.format({
-    protocol: req.headers['x-forwarded-proto'],
+    protocol,
     host: req.headers.host,
     search: (url.parse(req.url).search || '').replace(/&?ack_report=./, ''),
     pathname: url.parse(req.url).pathname
