@@ -8,5 +8,5 @@ import path from 'path';
  * Examples:
  * - [3.28] /tmp/foo/bar.txt
  * - [3.46] ../libraries/go.js
- **/
+ */
 module.exports = s => !path.parse(s).dir;

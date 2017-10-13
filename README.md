@@ -70,7 +70,7 @@ The recommended way is to clone this repository, install required dependencies a
  cd repo-supervisor
 
  npm install
- GITHUB_TOKEN=<token> JWT_SECRET=<secret> npm deploy
+ GITHUB_TOKEN=<token> JWT_SECRET=<secret> npm run deploy
 ```
 
 After script was deployed it will return a URL address to your webtask which then you can use to setup a webhook.
@@ -81,7 +81,7 @@ _If you want to deploy webtask with profile different than a standard one you sh
 
 Installing webhook is easy and there is no difference to other webhooks provided by i.e. Zapier or IFTTT.
 
-Before installing a webhook you need to build and install this tool. As a result `npm deploy` should return the URL address to your deployed webtask. Point your **Payload URL** to webtask url and you're ready to go.
+Before installing a webhook you need to build and install this tool. As a result `npm run deploy` should return the URL address to your deployed webtask. Point your **Payload URL** to webtask url and you're ready to go.
 
 <div style="text-align:center"><img src="docs/webhook.setup.png"/></div>
 

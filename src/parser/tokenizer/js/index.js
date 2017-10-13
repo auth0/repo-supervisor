@@ -3,7 +3,7 @@ import { defaults, uniq } from 'lodash';
 
 /**
  * Return an array of all strings from javascript file.
- **/
+ */
 module.exports = (code, config) => {
   const tokens = [];
 
@@ -13,7 +13,7 @@ module.exports = (code, config) => {
     /**
      * Error when parsing JS file.
      * @TODO fallback to parse whole file as a single blob.
-     **/
+     */
     return [];
   }
 

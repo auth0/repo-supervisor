@@ -5,6 +5,7 @@ module.exports = (str) => {
   const set = {};
 
   str.split('').forEach(
+    /* eslint no-return-assign: "off" */
     c => (set[c] ? set[c]++ : (set[c] = 1))
   );
 

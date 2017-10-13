@@ -1,6 +1,6 @@
 {
   "name": "repo-supervisor",
-  "version": "1.1.2",
+  "version": "1.1.4",
   "description": "Scan your code for security misconfigurations, search for passwords and secrets.",
   "main": "src/index.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "lint": "eslint src/ config/ --quiet",
     "logs": "./bin/wt logs",
     "start": "./bin/wt serve --parse-body --port ${PORT:-7070} --hostname ${HOST:-localhost} --secret GITHUB_TOKEN=$GITHUB_TOKEN --secret JWT_SECRET=$JWT_SECRET dist/webtask.js",
-    "test": "npm run build && NODE_PATH=. mocha",
+    "test": "npm run build && npm run lint && NODE_PATH=. mocha",
     "validate": "npm run lint && npm outdated --depth 0",
     "watch": "./bin/webpack --config config/webpack.js --watch --bail --display-error-details"
   },
@@ -32,17 +32,17 @@
     "wt-cli": "^6.1.0"
   },
   "dependencies": {
-    "acorn": "^5.0.3",
+    "acorn": "^5.1.1",
     "bluebird": "^3.5.0",
     "github": "^9.2.0",
-    "handlebars": "^4.0.8",
+    "handlebars": "^4.0.10",
     "handlebars-loader": "^1.5.0",
-    "jsonwebtoken": "^7.4.0",
+    "jsonwebtoken": "^7.4.1",
     "lodash": "^4.17.4",
     "request": "^2.81.0",
     "request-promise": "^4.2.1"
   },
-"optionalDependencies": {
+  "optionalDependencies": {
     "fsevents": "*"
   }
 }

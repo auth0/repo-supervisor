@@ -8,3 +8,5 @@ node_modules
 .npm
 .node_repl_history
 TODO
+.vscode
+.config.json
