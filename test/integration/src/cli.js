@@ -28,10 +28,15 @@ describe('Scenario: Run tool in CLI mode to detect secrets', () => {
 
   it('should not detect secrets in unsupported file format', (cb) => {
     const dir = './test/fixtures/integration/dir.with.secrets.not.supported.format';
-    const msg = 'Not detected any secrets in files.';
+    const msg =
+`===== Potential secrets have been detected: =====
+[./test/fixtures/integration/dir.with.secrets.not.supported.format/foo/bar/hello.txt]
+>> KTvV_kAq6_SSFReHhdRz-WciZ
+>> 2-Yh4unNQr-zv3ogt6s-tA_qK
+>> Hq6ZnRJxHiStoHLNu_jzsb4-u`;
 
     exec(`node ./dist/cli.js ${dir}`, (error, stdout) => {
-      expect(error.code).to.be.equal(1);
+      expect(error).to.be.null;
       expect(stdout.trim()).to.be.equal(msg);
       cb();
     });
