@@ -10,7 +10,8 @@
     "min.length.js",
     "multiple.words.js",
     "object.keys.identifiers.js",
-    "skip.prefixes.js"
+    "skip.prefixes.js",
+    "dictionary.words.js"
   ],
   "options": {
     "entropyPrecision": 4,
