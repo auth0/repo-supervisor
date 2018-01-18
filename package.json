@@ -10,7 +10,7 @@
     "lint": "eslint src/ config/ --quiet",
     "logs": "./bin/wt logs",
     "start": "./bin/wt serve --parse-body --port ${PORT:-7070} --hostname ${HOST:-localhost} --secret GITHUB_TOKEN=$GITHUB_TOKEN --secret JWT_SECRET=$JWT_SECRET dist/webtask.js",
-    "test": "npm run build && npm run lint && NODE_PATH=. mocha",
+    "test": "npm run build && npm run lint && mocha",
     "validate": "npm run lint && npm outdated --depth 0",
     "watch": "./bin/webpack --config config/webpack.js --watch --bail --display-error-details"
   },
