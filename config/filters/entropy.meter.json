@@ -3,6 +3,7 @@
     "general": "The entropy level for strings is too high. It may be a result of passwords or secrets stored in your files. Check files listed together with highlighted strings. Migrate any detected secrets."
   },
   "preFilters": [
+    "whitelist.js",
     "authentication.urls.js",
     "css.selectors.js",
     "email.addresses.js",
@@ -19,6 +20,9 @@
     "preFilters": {
       "skipPrefixes": [
         "test-", "foobar-"
+      ],
+      "whitelist": [
+        "test", "foobar", "foo", "bar"
       ],
       "minStringLength": 15
     }

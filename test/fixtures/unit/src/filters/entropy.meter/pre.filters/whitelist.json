@@ -1,0 +1,17 @@
+{
+  "whitelist": [
+    "foobar",
+    "foo",
+    "bar",
+    "test"
+  ],
+  "shouldNotMatch": [
+    "hello",
+    "test-code",
+    "hello-foobar",
+    "foo_bar",
+    "bar-bar",
+    "?foobar",
+    "FOO"
+  ]
+}
