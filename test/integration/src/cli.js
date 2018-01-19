@@ -26,7 +26,7 @@ describe('Scenario: Run tool in CLI mode to detect secrets', () => {
     });
   });
 
-  it('should not detect secrets in unsupported file format', (cb) => {
+  it('should detect secrets in unsupported file formats', (cb) => {
     const dir = './test/fixtures/integration/dir.with.secrets.not.supported.format';
     const msg =
 `===== Potential secrets have been detected: =====
