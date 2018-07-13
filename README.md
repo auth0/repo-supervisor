@@ -8,6 +8,10 @@ Serverless tool that detects secrets and passwords in your pull requests - one f
 
 <div style="text-align:center"><img src="docs/report.preview.png"/></div>
 
+## Help
+
+If you need help please visit [Wiki](https://github.com/auth0/repo-supervisor/wiki/) or [Gitter chat](https://gitter.im/repo-supervisor/Lobby).
+
 ## Command line mode
 
 To start using tool without setting up webhooks etc. you can start scanning local directories right after downloading the source code:
