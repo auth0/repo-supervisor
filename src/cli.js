@@ -8,7 +8,7 @@ const walk = (dir) => {
 
   list.forEach((file) => {
     file = `${dir}/${file}`;
-    const stat = fs.statSync(file);
+    const stat = fs.lstatSync(file);
     if (stat && stat.isDirectory()) results = results.concat(walk(file));
     else results.push(file);
   });
@@ -35,7 +35,7 @@ if (process.argv.length < 3) {
 
 const dir = process.argv[2];
 
-if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) {
+if (!fs.existsSync(dir) || !fs.lstatSync(dir).isDirectory()) {
   throwError(`"${dir}" is not a valid directory.`);
 }
 
