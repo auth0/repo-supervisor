@@ -88,6 +88,8 @@ Installing webhook is easy and there is no difference to other webhooks provided
 
 Before installing a webhook you need to build and install this tool. As a result `npm run deploy` should return the URL address to your deployed webtask. Point your **Payload URL** to webtask url and you're ready to go.
 
+:exclamation: Please ensure that the Content type for a webhook is set to `application/json`. :exclamation:
+
 <div style="text-align:center"><img src="docs/webhook.setup.png"/></div>
 
 > Which events would you like to trigger this webhook?
