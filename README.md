@@ -2,10 +2,15 @@
 
 Serverless tool that detects secrets and passwords in your pull requests - one file at a time.
 
+[![Join the chat at https://gitter.im/repo-supervisor/Lobby](https://badges.gitter.im/repo-supervisor/Lobby.svg)](https://gitter.im/repo-supervisor/Lobby)
 [![Build Status](https://travis-ci.org/auth0/repo-supervisor.svg?branch=master)](https://travis-ci.org/auth0/repo-supervisor)
 
 
 <div style="text-align:center"><img src="docs/report.preview.png"/></div>
+
+## Help
+
+If you need help please visit [Wiki](https://github.com/auth0/repo-supervisor/wiki/) or [Gitter chat](https://gitter.im/repo-supervisor/Lobby).
 
 ## Command line mode
 
@@ -82,6 +87,8 @@ _If you want to deploy webtask with profile different than a standard one you sh
 Installing webhook is easy and there is no difference to other webhooks provided by i.e. Zapier or IFTTT.
 
 Before installing a webhook you need to build and install this tool. As a result `npm run deploy` should return the URL address to your deployed webtask. Point your **Payload URL** to webtask url and you're ready to go.
+
+:exclamation: Please ensure that the Content type for a webhook is set to `application/json`. :exclamation:
 
 <div style="text-align:center"><img src="docs/webhook.setup.png"/></div>
 
