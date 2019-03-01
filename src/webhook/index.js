@@ -18,9 +18,11 @@ module.exports = ({
                         });
 
       return files;
-    }).then(files => Promise.map(files, file => service.git.getBlob({ owner, repo, file_sha: file.sha }).then(
-      resp => ({ blob: resp.data, meta: file })
-    ))).then(files => {
+    }).then(files => Promise.map(files, file =>
+      service.git.getBlob({ owner, repo, file_sha: file.sha }).then(
+        resp => ({ blob: resp.data, meta: file })
+      )
+    )).then((files) => {
       // Apply filters specific for file types
       const issues = [];
 
