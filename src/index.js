@@ -14,7 +14,13 @@ module.exports = (ctx, req, res) => {
   assert(ctx.secrets.GITHUB_TOKEN, 'GITHUB_TOKEN is not set.');
   assert(ctx.secrets.JWT_SECRET, 'JWT_SECRET is not set.');
 
-  const respond = data => res.end(typeof data !== 'string' ? '' : data);
+  const respond = (data, httpCode) => {
+    if (httpCode && Number.isSafeInteger(httpCode)) {
+      res.writeHead(httpCode);
+    }
+
+    res.end(typeof data !== 'string' ? '' : data);
+  };
   const service = github(ctx.secrets.GITHUB_TOKEN);
   const view = viewer(ctx.secrets.JWT_SECRET, service);
 
@@ -34,7 +40,7 @@ module.exports = (ctx, req, res) => {
       // Make PR green again if report was rejected.
       return status.setSuccess(
         `[rejected] ${config.statusMessages.success}`, url.getWebtaskURL(req)
-      ).finally(() =>
+      ).then(() =>
         respond(JSON.stringify({
           success: true
         }))
