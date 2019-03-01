@@ -24,25 +24,22 @@
     "chai": "^3.5.0",
     "eslint": "^3.19.0",
     "eslint-config-airbnb-base": "^11.3.2",
-    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-import": "^2.16.0",
     "json-loader": "^0.5.4",
-    "mocha": "^3.5.3",
+    "mocha": "^6.0.2",
     "webpack": "^2.5.1",
     "webpack-node-externals": "^1.7.2",
-    "wt-cli": "^6.6.0"
+    "wt-cli": "^11.0.2"
   },
   "dependencies": {
-    "acorn": "^5.7.1",
-    "bluebird": "^3.5.1",
-    "github": "^9.3.1",
-    "handlebars": "^4.0.11",
-    "handlebars-loader": "^1.7.0",
-    "jsonwebtoken": "^7.4.3",
-    "lodash": "^4.17.10",
-    "request": "^2.87.0",
-    "request-promise": "^4.2.2"
-  },
-  "optionalDependencies": {
-    "fsevents": "*"
+    "acorn": "^5.7.3",
+    "bluebird": "^3.5.3",
+    "github": "^14.0.0",
+    "handlebars": "^4.1.0",
+    "handlebars-loader": "^1.7.1",
+    "jsonwebtoken": "^8.5.0",
+    "lodash": "^4.17.11",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4"
   }
 }
