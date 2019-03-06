@@ -1,4 +1,5 @@
 import { flatten } from 'lodash';
+import { Promise } from 'bluebird';
 import path from 'path';
 import config from './../../config/main.json';
 import filters from './../filters';
@@ -6,7 +7,7 @@ import filters from './../filters';
 module.exports = ({
   parse: (service, pullRequestId, owner, repo, rawOutput) =>
     // Get list of files in a specific pull request
-    service.pullRequests.getFiles({ owner, repo, number: pullRequestId })
+    service.pulls.listFiles({ owner, repo, number: pullRequestId })
     .then((resp) => {
       const exts = config.pullRequests.allowedExtensions;
       const paths = config.pullRequests.excludedPaths;
@@ -17,11 +18,11 @@ module.exports = ({
                         });
 
       return files;
-    })
-    .map(file => service.gitdata.getBlob({ owner, repo, sha: file.sha }).then(
-      resp => ({ blob: resp.data, meta: file })
-    ))
-    .then((files) => {
+    }).then(files => Promise.map(files, file =>
+      service.git.getBlob({ owner, repo, file_sha: file.sha }).then(
+        resp => ({ blob: resp.data, meta: file })
+      )
+    )).then((files) => {
       // Apply filters specific for file types
       const issues = [];
 

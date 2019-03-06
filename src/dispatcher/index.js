@@ -42,21 +42,24 @@ module.exports = (ctx, req, github, viewer, res) => {
       }
 
       if (updateCIStatus) {
-        return status.setError(config.statusMessages.error, reportURL).finally(() =>
+        return status.setError(config.statusMessages.error, reportURL).then(() =>
           res(SUCCESS_RESPONSE)
         );
       }
     }
 
-    return status.setSuccess(config.statusMessages.success, reportURL).finally(() =>
+    return status.setSuccess(config.statusMessages.success, reportURL).then(() =>
       res(SUCCESS_RESPONSE)
     );
   })
   .catch((err) => {
+    const httpCode = Number.isSafeInteger(err.status) ? err.status : 400;
+    const message = (httpCode === 404) ? 'Invalid permissions for the Github token' : err.toString();
+
     if (updateCIStatus) {
-      status.setFailure(err.toString()).finally(() => res(err.stack));
+      status.setFailure(message).then(() => res(err.stack, httpCode));
     } else {
-      res(err.stack);
+      res(err.stack, httpCode);
     }
   });
 };
