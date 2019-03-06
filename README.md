@@ -29,19 +29,25 @@ To trigger JSON format for the output report you need to set `JSON_OUTPUT=1` env
 ```bash
 → JSON_OUTPUT=1 node ./dist/cli.js ./test/fixtures/integration/dir.with.secrets/foo/ | jq
 {
-  "result": {
-    "./test/fixtures/integration/dir.with.secrets/foo//bar.js": [
-      "zJd-55qmsY6LD53CRTqnCr_g-",
-      "gm5yb-hJWRoS7ZJTi_YUj_tbU",
-      "GxC56B6x67anequGYNPsW_-TL",
-      "MLTk-BuGS8s6Tx9iK5zaL8a_W",
-      "2g877BA_TsE-WoPoWrjHah9ta"
-    ],
-    "./test/fixtures/integration/dir.with.secrets/foo//foo.json": [
-      "d7kyociU24P9hJ_sYVkqzo-kE",
-      "q28Wt3nAmLt_3NGpqi2qz-jQ7"
-    ]
-  }
+  "result": [
+    {
+      "filepath": "./test/fixtures/integration/dir.with.secrets/foo/bar.js",
+      "secrets": [
+        "zJd-55qmsY6LD53CRTqnCr_g-",
+        "gm5yb-hJWRoS7ZJTi_YUj_tbU",
+        "GxC56B6x67anequGYNPsW_-TL",
+        "MLTk-BuGS8s6Tx9iK5zaL8a_W",
+        "2g877BA_TsE-WoPoWrjHah9ta"
+      ]
+    },
+    {
+      "filepath": "./test/fixtures/integration/dir.with.secrets/foo/foo.json",
+      "secrets": [
+        "d7kyociU24P9hJ_sYVkqzo-kE",
+        "q28Wt3nAmLt_3NGpqi2qz-jQ7"
+      ]
+    }
+  ]
 }
 ```
 
@@ -63,7 +69,7 @@ As a result it should return detected secrets in JSON format:
 
 ```
 → docker run -it --rm -v /local/path/on/your/host:/opt/scan_me repo-supervisor /bin/bash -c "source ~/.bashrc && JSON_OUTPUT=1 node /opt/repo-supervisor/dist/cli.js /opt/scan_me"
-{"result":{"/opt/scan_me/bar.js":["zJd-55qmsY6LD53CRTqnCr_g-","gm5yb-hJWRoS7ZJTi_YUj_tbU","GxC56B6x67anequGYNPsW_-TL","MLTk-BuGS8s6Tx9iK5zaL8a_W","2g877BA_TsE-WoPoWrjHah9ta"],"/opt/scan_me/foo.json":["d7kyociU24P9hJ_sYVkqzo-kE","q28Wt3nAmLt_3NGpqi2qz-jQ7"]}}
+{"result":[{"filepath":"./test/fixtures/integration/dir.with.secrets/foo/bar.js","secrets":["zJd-55qmsY6LD53CRTqnCr_g-","gm5yb-hJWRoS7ZJTi_YUj_tbU","GxC56B6x67anequGYNPsW_-TL","MLTk-BuGS8s6Tx9iK5zaL8a_W","2g877BA_TsE-WoPoWrjHah9ta"]},{"filepath":"./test/fixtures/integration/dir.with.secrets/foo/foo.json","secrets":["d7kyociU24P9hJ_sYVkqzo-kE","q28Wt3nAmLt_3NGpqi2qz-jQ7"]}]}
 ```
 
 ## Setup

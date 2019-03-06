@@ -1,5 +1,9 @@
 import fs from 'fs';
+import { format } from 'util';
 import filters from './filters';
+
+const MESSAGE_MISSING_PARAMS = 'The directory argument was not provided.';
+const MESSAGE_INVALID_DIRECTORY = '"%s" is not a valid directory.';
 
 const isJSON = !!process.env.JSON_OUTPUT;
 const walk = (dir) => {
@@ -17,59 +21,47 @@ const walk = (dir) => {
 };
 
 const throwError = (message) => {
-  if (isJSON) {
-    const output = {
-      error: message
-    };
-    console.log(JSON.stringify(output));
-  } else {
-    console.log(message);
-  }
-
+  console.log(isJSON ? JSON.stringify({ result: [], error: message }) : message);
   process.exit(1);
 };
 
 if (process.argv.length < 3) {
-  throwError('Usage: npm run cli <directory>');
+  throwError(MESSAGE_MISSING_PARAMS);
 }
 
 const dir = process.argv[2];
 
 if (!fs.existsSync(dir) || !fs.lstatSync(dir).isDirectory()) {
-  throwError(`"${dir}" is not a valid directory.`);
+  throwError(format(MESSAGE_INVALID_DIRECTORY, dir));
 }
 
 const files = walk(dir);
-const filesDetected = {};
-
-if (files.length <= 0) {
-  throwError('Not found any files that could be tested.');
-}
+const filesDetected = [];
 
 files.forEach((file) => {
   const result = filters.processFile({ filename: file }, fs.readFileSync(file), true);
-  if (result.length > 0) filesDetected[file] = result[0].filter.data.map(o => o.string);
-});
 
-if (Object.keys(filesDetected).length <= 0) {
-  throwError('Not detected any secrets in files.');
-}
+  if (result.length > 0) {
+    filesDetected.push({
+      filepath: file,
+      secrets: result[0].filter.data.map(o => o.string)
+    });
+  }
+});
 
 if (isJSON) {
   const output = {
-    result: filesDetected
+    result: filesDetected.length > 0 ? filesDetected : []
   };
 
   console.log(JSON.stringify(output));
   process.exit();
 }
 
-console.log('===== Potential secrets have been detected: =====');
+filesDetected.forEach((entry) => {
+  console.log(format(`[${entry.filepath}]`));
 
-Object.keys(filesDetected).forEach((prop) => {
-  console.log(`[${prop}]`);
-
-  filesDetected[prop].forEach((secret) => {
+  entry.secrets.forEach((secret) => {
     console.log(`>> ${secret}`);
   });
 
