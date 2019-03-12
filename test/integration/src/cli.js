@@ -1,4 +1,10 @@
 const exec = require('child_process').exec;
+const options = {
+  env: {
+    JSON_OUTPUT: '1',
+    PATH: process.env.PATH
+  }
+};
 
 describe('Scenario: Run tool in CLI mode to detect secrets', () => {
   it('should print error message when no parameters were provided', (cb) => {
@@ -14,7 +20,7 @@ describe('Scenario: Run tool in CLI mode to detect secrets', () => {
   it('should print error message when no parameters were provided - JSON response', (cb) => {
     const msg = '{"result":[],"error":"The directory argument was not provided."}';
 
-    exec('JSON_OUTPUT=1 node ./dist/cli.js', (error, stdout) => {
+    exec('node ./dist/cli.js', options, (error, stdout) => {
       expect(error.code).to.be.equal(1);
       expect(stdout.trim()).to.be.equal(msg);
       cb();
@@ -36,7 +42,7 @@ describe('Scenario: Run tool in CLI mode to detect secrets', () => {
     const dir = './test/fixtures/integration/dir.without.any.files.to.test';
     const msg = '{"result":[]}';
 
-    exec(`JSON_OUTPUT=1 node ./dist/cli.js ${dir}`, (error, stdout) => {
+    exec(`node ./dist/cli.js ${dir}`, options, (error, stdout) => {
       expect(error).to.be.null;
       expect(stdout.trim()).to.be.equal(msg);
       cb();
@@ -58,7 +64,7 @@ describe('Scenario: Run tool in CLI mode to detect secrets', () => {
     const dir = './test/fixtures/integration/dir.with.secrets.not.supported.format';
     const msg = '{"result":[]}';
 
-    exec(`JSON_OUTPUT=1 node ./dist/cli.js ${dir}`, (error, stdout) => {
+    exec(`node ./dist/cli.js ${dir}`, options, (error, stdout) => {
       expect(error).to.be.null;
       expect(stdout.trim()).to.be.equal(msg);
       cb();
@@ -80,7 +86,7 @@ describe('Scenario: Run tool in CLI mode to detect secrets', () => {
     const dir = './this_dir_does_not_exist';
     const msg = `{"result":[],"error":"\\"${dir}\\" is not a valid directory."}`;
 
-    exec(`JSON_OUTPUT=1 node ./dist/cli.js ${dir}`, (error, stdout) => {
+    exec(`node ./dist/cli.js ${dir}`, options, (error, stdout) => {
       expect(error.code).to.be.equal(1);
       expect(stdout.trim()).to.be.equal(msg);
       cb();
@@ -112,7 +118,7 @@ describe('Scenario: Run tool in CLI mode to detect secrets', () => {
     const dir = './test/fixtures/integration/dir.with.secrets';
     const msg = '{"result":[{"filepath":"./test/fixtures/integration/dir.with.secrets/foo/bar.js","secrets":["zJd-55qmsY6LD53CRTqnCr_g-","gm5yb-hJWRoS7ZJTi_YUj_tbU","GxC56B6x67anequGYNPsW_-TL","MLTk-BuGS8s6Tx9iK5zaL8a_W","2g877BA_TsE-WoPoWrjHah9ta"]},{"filepath":"./test/fixtures/integration/dir.with.secrets/foo/foo.json","secrets":["d7kyociU24P9hJ_sYVkqzo-kE","q28Wt3nAmLt_3NGpqi2qz-jQ7"]}]}';
 
-    exec(`JSON_OUTPUT=1 node ./dist/cli.js ${dir}`, (error, stdout) => {
+    exec(`node ./dist/cli.js ${dir}`, options, (error, stdout) => {
       expect(error).to.be.null;
       expect(stdout.trim()).to.be.equal(msg);
       cb();

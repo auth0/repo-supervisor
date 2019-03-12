@@ -18,7 +18,7 @@
     "comma-dangle": ["error", "never"],
     "global-require": "off",
     "import/no-dynamic-require": "off",
-    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["config/webpack.js"]}],
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["config/webpack.js", "test/**"]}],
     "no-bitwise": "off",
     "no-console": "off",
     "no-param-reassign": "off",
