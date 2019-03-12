@@ -6,6 +6,9 @@
     "excludedPaths": ["^test"],
     "updateGithubStatus": true
   },
+  "cli": {
+    "excludedPaths": ["^test", "^[.]git$"]
+  },
   "runTriggers": true,
   "statusMessages": {
     "error": "Security issues detected, check report for details.",
