@@ -1,0 +1,34 @@
+{
+  "camelCase": [
+    "thisIsTotallyASetOfRealWords",
+    "ThisHasSomeThwnflWords",
+    "monitoredByTheCIAInterpreter",
+    "GenerateHTMLParser",
+    "set123ofStuff"
+  ],
+  "separators": [
+    "totally-a-real-set-of-words",
+    "contains-myspyled-wurds-too",
+    "the-numbers-123-are-great",
+    "underscore_can_be_used",
+    "mixing_separators_for_fun-and-profit",
+    "UPPER-CASE-PHRASE"
+  ],
+  "mixed": [
+    "some-words-are-camelCased-but-some-areNot",
+    "CapitalLettersCanDoSome-WeirdStuff"
+  ],
+  "singleWords": [
+    "hello",
+    "Test"
+  ],
+  "notWords": [
+    "6c6e34b5-5b9d-4b58-989a-3193ae39612e",
+    "abc123",
+    "Llxr8IOO5UucEqB8fng",
+    "RNf_4j3t5ki2Qj-wnWjsNg",
+    "RNf_4jdttki2Qj-wnwjsng",
+    "almost-ryeal-byet-noeut-there-jyet",
+    "c6790fe8ae230ecce7fa521079e4ed08"
+  ]
+}

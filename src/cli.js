@@ -1,16 +1,24 @@
 import fs from 'fs';
 import { format } from 'util';
 import filters from './filters';
+import config from './../config/main.json';
 
 const MESSAGE_MISSING_PARAMS = 'The directory argument was not provided.';
 const MESSAGE_INVALID_DIRECTORY = '"%s" is not a valid directory.';
 
 const isJSON = !!process.env.JSON_OUTPUT;
+const excludedPaths = config.cli.excludedPaths.map(x => new RegExp(x));
+
+function isExcluded(file) {
+  return excludedPaths.find(regex => file.match(regex));
+}
+
 const walk = (dir) => {
   let results = [];
   const list = fs.readdirSync(dir);
 
   list.forEach((file) => {
+    if (isExcluded(file)) return;
     file = `${dir}/${file}`;
     const stat = fs.lstatSync(file);
     if (stat && stat.isDirectory()) results = results.concat(walk(file));
