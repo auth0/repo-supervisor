@@ -7,7 +7,7 @@ import filters from './../filters';
 module.exports = ({
   parse: (service, pullRequestId, owner, repo, rawOutput) =>
     // Get list of files in a specific pull request
-    service.pulls.listFiles({ owner, repo, number: pullRequestId })
+    service.pulls.listFiles({ owner, repo, pull_number: pullRequestId })
     .then((resp) => {
       const exts = config.pullRequests.allowedExtensions;
       const paths = config.pullRequests.excludedPaths;
