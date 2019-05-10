@@ -80,7 +80,7 @@ The recommended way is to clone this repository, install required dependencies a
  git clone git@github.com:auth0/repo-supervisor.git
  cd repo-supervisor
 
- npm install
+ npm install --no-optional
  GITHUB_TOKEN=<token> JWT_SECRET=<secret> npm run deploy
 ```
 
