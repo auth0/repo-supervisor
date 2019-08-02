@@ -16,6 +16,6 @@ const regex = new RegExp(
   '(^[#.]?[a-z]+\\[[a-z]+(.?=)[^\\]]+\\]$)|' +
   // [name="submit"], [name^="submit"]:enabled
   '(^\\[[a-z]+(.?=)[^\\]]+\\](:[a-z]+)?$)'
-, 'i');
+  , 'i');
 
 module.exports = s => !regex.test(s);
