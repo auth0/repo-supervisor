@@ -26,7 +26,7 @@ module.exports = (strings) => {
    */
   const stringsForProcessing = strings.filter(str => config.preFilters.reduce((acc, name) =>
     (acc &= require(`./pre.filters/${name}`)(str, config.options.preFilters))
-  , 1));
+    , 1));
 
   // Calculate entropy for every string
   const maxEntropy = config.options.maxAllowedEntropy;
