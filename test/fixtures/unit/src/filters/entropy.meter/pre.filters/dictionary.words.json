@@ -12,7 +12,10 @@
     "the-numbers-123-are-great",
     "underscore_can_be_used",
     "mixing_separators_for_fun-and-profit",
-    "UPPER-CASE-PHRASE"
+    "UPPER-CASE-PHRASE",
+    "mixing.separators,for.fun-and-profits",
+    "totally.a.real.set.of.words",
+    "totally,a,real,set,of,words"
   ],
   "mixed": [
     "some-words-are-camelCased-but-some-areNot",
