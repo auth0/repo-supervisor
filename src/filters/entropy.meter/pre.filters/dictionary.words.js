@@ -5,8 +5,8 @@ const dictionary = new Set(require('an-array-of-english-words'));
 const requiredPercent = 0.35;
 
 function splitIntoWords(str) {
-  // Hyphens, underscores, and numbers
-  str = str.replace(/[-_]/g, ' ')
+  // Hyphens, underscores, commas, stops and numbers
+  str = str.replace(/[-_,.]/g, ' ')
     .replace(/([0-9]+)/g, ' $1 ');
 
   // camelCase
