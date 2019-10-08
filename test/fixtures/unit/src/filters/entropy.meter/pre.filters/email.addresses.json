@@ -7,6 +7,10 @@
     "john.doe+test@example.museum",
     "john.doe_test+foobar@example.com",
     "john@example.museum",
-    "john@doe.example.com"
+    "john@doe.example.com",
+    "no-reply@example0.com",
+    "test1@example2.com",
+    "test2@example-1-2.com",
+    "test@example.1.2.com"
   ]
 }
