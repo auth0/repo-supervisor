@@ -1,0 +1,30 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:10
+    environment:
+      LANG: en_US.UTF-8
+    steps:
+      - checkout
+      - run:
+          name: Update NPM
+          command: 'sudo npm update -g npm'
+      - restore-cache:
+          name: Restore NPM Package Cache
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+      - run:
+          name: Install Dependencies
+          command: npm install --no-optional
+      - save-cache:
+          name: Save NPM Package Cache
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: Run Tests
+          command: npm test
+          when: always
