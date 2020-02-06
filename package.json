@@ -6,10 +6,7 @@
   "scripts": {
     "build": "webpack --config config/webpack.js",
     "cli": "node dist/cli.js",
-    "deploy": "npm run build && ./bin/wt create --name \"${WT_NAME:-repo-supervisor}\" --parse-body --secret GITHUB_TOKEN=\"$GITHUB_TOKEN\" --secret JWT_SECRET=\"$JWT_SECRET\" -p \"${WT_PROFILE:-default}\" --meta wt-node-dependencies=$(./bin/get.wt.deps.sh) dist/webtask.js",
     "lint": "eslint src/ config/ --quiet",
-    "logs": "./bin/wt logs",
-    "start": "./bin/wt serve --parse-body --port ${PORT:-7070} --hostname ${HOST:-localhost} --secret GITHUB_TOKEN=$GITHUB_TOKEN --secret JWT_SECRET=$JWT_SECRET dist/webtask.js",
     "test": "npm run build && npm run lint && mocha",
     "validate": "npm run lint && npm outdated --depth 0",
     "watch": "./bin/webpack --config config/webpack.js --watch --bail --display-error-details"
@@ -28,8 +25,7 @@
     "json-loader": "^0.5.4",
     "mocha": "^6.1.4",
     "webpack": "^2.5.1",
-    "webpack-node-externals": "^1.7.2",
-    "wt-cli": "^11.0.2"
+    "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
     "@octokit/rest": "^16.25.2",
