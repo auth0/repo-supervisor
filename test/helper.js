@@ -1,8 +1,10 @@
 const chai = require('chai');
 
-global.expect = require('chai').expect;
-global.srcPath = process.cwd() + '/src/';
+global.expect = chai.expect;
+global.assert = chai.assert;
+global.srcPath = `${process.cwd()}/src/`;
 global.defaultFixtures = require('./fixtures/fixtures.json');
+
 global.configs = {
   preFilters: require('./../config/filters/entropy.meter.json').options.preFilters
 };
@@ -17,6 +19,6 @@ global.getFixtures = (filepath) => {
   return require(jsonPath);
 };
 
-require('babel-core/register')({
-  ignore: /node_modules\/(?!ProjectB)/
+require('@babel/register')({
+  ignore: [/node_modules/]
 });
