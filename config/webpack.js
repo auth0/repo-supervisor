@@ -4,48 +4,87 @@ const webpack = require('webpack');
 
 const distPath = path.join(__dirname, '../dist');
 
-module.exports = {
-  entry: {
-    cli: './src/cli.js',
-    webtask: './src/index.js'
-  },
-  output: {
-    path: distPath,
-    filename: '[name].js',
-    libraryTarget: 'commonjs2'
-  },
-  target: 'async-node',
-  externals: [nodeExternals()],
+const config = {
+  cache: false,
+  target: 'node',
   resolve: {
+    // https://github.com/octokit/rest.js/issues/1485
+    mainFields: ['main'],
     alias: {
       filters: path.resolve(__dirname, '../src/filters'),
       parser: path.resolve(__dirname, '../src/parser')
     }
   },
   module: {
-    loaders: [
-      { test: /\.json$/, loader: 'json-loader' },
-      { test: /\.handlebars$/,
-        loader: `handlebars-loader?helperDirs[]=${__dirname}/../src/render/templates/helpers` },
-      { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' }
+    rules: [
+      {
+        test: /\.hbs$/,
+        loader: `handlebars-loader?helperDirs[]=${__dirname}/../src/render/templates/helpers`
+      },
+      {
+        test: /\.js$/,
+        exclude: [/node_modules/],
+        loader: 'babel-loader',
+        enforce: 'pre'
+      }
     ]
   },
   plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      output: {
-        comments: false // remove comments
-      },
-      compress: {
-        unused: true,
-        dead_code: true, // big one--strip code that will never execute
-        warnings: false, // good for prod apps so users can't peek behind curtain
-        drop_debugger: true,
-        conditionals: true,
-        evaluate: true,
-        drop_console: false, // strips console statements
-        sequences: true,
-        booleans: true
-      }
-    })
+    // https://github.com/node-fetch/node-fetch/issues/412
+    new webpack.IgnorePlugin(/^encoding$/, /node-fetch/)
   ]
 };
+
+const cliConfigFull = Object.assign({}, config, {
+  entry: {
+    './cli': './src/cli.js'
+  },
+  output: {
+    filename: '[name].js',
+    path: distPath,
+    libraryTarget: 'umd'
+  }
+});
+
+const cliConfigLight = Object.assign({}, config, {
+  entry: {
+    './cli.light': './src/cli.js'
+  },
+  output: {
+    filename: '[name].js',
+    path: distPath,
+    libraryTarget: 'umd'
+  },
+  externals: [nodeExternals()]
+});
+
+const lambdaConfigFull = Object.assign({}, config, {
+  entry: {
+    './awslambda': './src/index.js'
+  },
+  output: {
+    filename: '[name].js',
+    path: distPath,
+    libraryTarget: 'commonjs2'
+  }
+});
+
+const lambdaConfigLight = Object.assign({}, config, {
+  entry: {
+    './awslambda.light': './src/index.js'
+  },
+  output: {
+    filename: '[name].js',
+    path: distPath,
+    libraryTarget: 'commonjs2'
+  },
+  externals: [nodeExternals()]
+});
+
+module.exports = [
+  cliConfigLight,
+  cliConfigFull,
+  lambdaConfigLight,
+  lambdaConfigFull
+];
+
