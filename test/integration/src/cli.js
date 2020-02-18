@@ -1,4 +1,6 @@
 const exec = require('child_process').exec;
+
+const execCMD = 'node ./dist/cli.js';
 const options = {
   env: {
     JSON_OUTPUT: '1',
@@ -8,9 +10,9 @@ const options = {
 
 describe('Scenario: Run tool in CLI mode to detect secrets', () => {
   it('should print error message when no parameters were provided', (cb) => {
-    const msg = 'The directory argument was not provided.';
+    const msg = 'Invalid number of arguments.';
 
-    exec('node ./dist/cli.js', (error, stdout) => {
+    exec(execCMD, (error, stdout) => {
       expect(error.code).to.be.equal(1);
       expect(stdout.trim()).to.be.equal(msg);
       cb();
@@ -18,9 +20,9 @@ describe('Scenario: Run tool in CLI mode to detect secrets', () => {
   });
 
   it('should print error message when no parameters were provided - JSON response', (cb) => {
-    const msg = '{"result":[],"error":"The directory argument was not provided."}';
+    const msg = '{"result":[],"error":"Invalid number of arguments."}';
 
-    exec('node ./dist/cli.js', options, (error, stdout) => {
+    exec(execCMD, options, (error, stdout) => {
       expect(error.code).to.be.equal(1);
       expect(stdout.trim()).to.be.equal(msg);
       cb();
@@ -31,7 +33,7 @@ describe('Scenario: Run tool in CLI mode to detect secrets', () => {
     const dir = './test/fixtures/integration/dir.without.any.files.to.test';
     const msg = '';
 
-    exec(`node ./dist/cli.js ${dir}`, (error, stdout) => {
+    exec(`${execCMD} ${dir}`, (error, stdout) => {
       expect(error).to.be.null;
       expect(stdout.trim()).to.be.equal(msg);
       cb();
@@ -42,7 +44,7 @@ describe('Scenario: Run tool in CLI mode to detect secrets', () => {
     const dir = './test/fixtures/integration/dir.without.any.files.to.test';
     const msg = '{"result":[]}';
 
-    exec(`node ./dist/cli.js ${dir}`, options, (error, stdout) => {
+    exec(`${execCMD} ${dir}`, options, (error, stdout) => {
       expect(error).to.be.null;
       expect(stdout.trim()).to.be.equal(msg);
       cb();
@@ -53,7 +55,7 @@ describe('Scenario: Run tool in CLI mode to detect secrets', () => {
     const dir = './test/fixtures/integration/dir.with.secrets.not.supported.format';
     const msg = '';
 
-    exec(`node ./dist/cli.js ${dir}`, (error, stdout) => {
+    exec(`${execCMD} ${dir}`, (error, stdout) => {
       expect(error).to.be.null;
       expect(stdout.trim()).to.be.equal(msg);
       cb();
@@ -64,7 +66,7 @@ describe('Scenario: Run tool in CLI mode to detect secrets', () => {
     const dir = './test/fixtures/integration/dir.with.secrets.not.supported.format';
     const msg = '{"result":[]}';
 
-    exec(`node ./dist/cli.js ${dir}`, options, (error, stdout) => {
+    exec(`${execCMD} ${dir}`, options, (error, stdout) => {
       expect(error).to.be.null;
       expect(stdout.trim()).to.be.equal(msg);
       cb();
@@ -75,7 +77,7 @@ describe('Scenario: Run tool in CLI mode to detect secrets', () => {
     const dir = './this_dir_does_not_exist';
     const msg = `"${dir}" is not a valid directory.`;
 
-    exec(`node ./dist/cli.js ${dir}`, (error, stdout) => {
+    exec(`${execCMD} ${dir}`, (error, stdout) => {
       expect(error.code).to.be.equal(1);
       expect(stdout.trim()).to.be.equal(msg);
       cb();
@@ -86,7 +88,7 @@ describe('Scenario: Run tool in CLI mode to detect secrets', () => {
     const dir = './this_dir_does_not_exist';
     const msg = `{"result":[],"error":"\\"${dir}\\" is not a valid directory."}`;
 
-    exec(`node ./dist/cli.js ${dir}`, options, (error, stdout) => {
+    exec(`${execCMD} ${dir}`, options, (error, stdout) => {
       expect(error.code).to.be.equal(1);
       expect(stdout.trim()).to.be.equal(msg);
       cb();
@@ -107,7 +109,7 @@ describe('Scenario: Run tool in CLI mode to detect secrets', () => {
 >> d7kyociU24P9hJ_sYVkqzo-kE
 >> q28Wt3nAmLt_3NGpqi2qz-jQ7`;
 
-    exec(`node ./dist/cli.js ${dir}`, (error, stdout) => {
+    exec(`${execCMD} ${dir}`, (error, stdout) => {
       expect(error).to.be.null;
       expect(stdout.trim()).to.be.equal(msg);
       cb();
@@ -118,7 +120,7 @@ describe('Scenario: Run tool in CLI mode to detect secrets', () => {
     const dir = './test/fixtures/integration/dir.with.secrets';
     const msg = '{"result":[{"filepath":"./test/fixtures/integration/dir.with.secrets/foo/bar.js","secrets":["zJd-55qmsY6LD53CRTqnCr_g-","gm5yb-hJWRoS7ZJTi_YUj_tbU","GxC56B6x67anequGYNPsW_-TL","MLTk-BuGS8s6Tx9iK5zaL8a_W","2g877BA_TsE-WoPoWrjHah9ta"]},{"filepath":"./test/fixtures/integration/dir.with.secrets/foo/foo.json","secrets":["d7kyociU24P9hJ_sYVkqzo-kE","q28Wt3nAmLt_3NGpqi2qz-jQ7"]}]}';
 
-    exec(`node ./dist/cli.js ${dir}`, options, (error, stdout) => {
+    exec(`${execCMD} ${dir}`, options, (error, stdout) => {
       expect(error).to.be.null;
       expect(stdout.trim()).to.be.equal(msg);
       cb();
