@@ -2,7 +2,7 @@
   "name": "Supervisor",
   "githubUrl": "https://github.com",
   "pullRequests": {
-    "allowedActions": ["opened", "synchronize"],
+    "allowedActions": ["opened", "reopened", "synchronize"],
     "allowedExtensions": [".js", ".json"],
     "excludedPaths": ["^test"],
     "updateGithubStatus": true
