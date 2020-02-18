@@ -1,8 +1,8 @@
-import { flatten } from 'lodash';
-import { Promise } from 'bluebird';
-import path from 'path';
-import config from './../../config/main.json';
-import filters from './../filters';
+const flatten = require('lodash').flatten;
+const path = require('path');
+const config = require('./../../config/main.json');
+const filters = require('./../filters');
+const render = require('./../render');
 
 module.exports = ({
   parse: (service, pullRequestId, owner, repo, rawOutput) =>
@@ -18,11 +18,17 @@ module.exports = ({
           });
 
         return files;
-      }).then(files => Promise.map(files, file =>
-        service.git.getBlob({ owner, repo, file_sha: file.sha }).then(
-          resp => ({ blob: resp.data, meta: file })
-        )
-      )).then((files) => {
+      }).then((files) => {
+        const promises = [];
+
+        files.forEach((file) => {
+          promises.push(service.git.getBlob({ owner, repo, file_sha: file.sha }).then(
+            resp => ({ blob: resp.data, meta: file })
+          ));
+        });
+
+        return Promise.all(promises);
+      }).then((files) => {
         // Apply filters specific for file types
         const issues = [];
 
@@ -39,5 +45,5 @@ module.exports = ({
 
         return flatten(issues);
       })
-      .then(issues => require('../render/index.js')({ issues }, rawOutput))
+      .then(issues => render({ issues, pullRequestId, owner, repo }, rawOutput))
 });

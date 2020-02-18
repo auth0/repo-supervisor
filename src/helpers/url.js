@@ -1,16 +1,17 @@
-import url from 'url';
-
-const githubURL = 'https://github.com';
-const protocol = 'https';
+const url = require('url');
+const config = require('./../../config/main.json');
 
 module.exports = {
-  getWebtaskURL: req => url.format({
-    protocol,
-    host: req.headers.host,
-    search: (url.parse(req.url).search || '').replace(/&?ack_report=./, ''),
-    pathname: url.parse(req.url).pathname
-  }),
-  getPullRequestURL: (repo, prId) => `${githubURL}/${repo}/pull/${prId}`,
-  getPullRequestURLFromJWT: data =>
-    `${githubURL}/${data.owner}/${data.repo}/pull/${data.pullRequestId}`
+  getEndpointURL: (event) => {
+    if (!event.headers) return null;
+
+    return url.format({
+      protocol: event.headers['X-Forwarded-Proto'],
+      host: event.headers.Host,
+      pathname: event.path
+    }).replace(/\/+$/g, '');
+  },
+  getRepoURL: (owner, repo) => `${config.githubUrl}/${owner}/${repo}`,
+  getPullRequestURL: (owner, repo, prId) => `${config.githubUrl}/${owner}/${repo}/pull/${prId}`,
+  getShortSlackURL: (link, text = 'show report') => `<${link}|${text}>`
 };

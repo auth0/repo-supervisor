@@ -1,5 +1,5 @@
-import path from 'path';
-import filtersList from './../../config/filters.json';
+const path = require('path');
+const filtersList = require('./../../config/filters.json');
 
 module.exports = {
   processFile: (metadata, fileContent, isPlainFile) => {
@@ -23,7 +23,7 @@ module.exports = {
     set = set.pop();
     set.filters.forEach((filterName) => {
       const filter = require(`./${filterName}`);
-      const content = isPlainFile ? fileContent : new Buffer(fileContent, 'base64').toString();
+      const content = isPlainFile ? fileContent : Buffer.from(fileContent, 'base64').toString();
       let filteredData = {};
 
       if ('parser' in set) {
