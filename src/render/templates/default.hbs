@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Repo Supervisor - security report</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <style type="text/css">
+    html {
+      position: relative;
+      min-height: 100%;
+    }
+    body {
+      margin-bottom: 60px;
+    }
+    .footer {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 60px;
+      background-color: #f5f5f5;
+    }
+    body > .container {
+      padding: 0 15px 0;
+    }
+    .container .text-muted {
+      margin: 20px 0;
+    }
+    .footer > .container {
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+    .page-header {
+      margin: 10px 0 20px;
+    }
+    code {
+      font-size: 80%;
+    }
+    .report-confirm {
+      margin-bottom: 10px;
+    }
+    .report-confirm > button {
+      margin-left: 5px;
+    }
+    .alert {
+      margin-bottom: 0 !important;
+    }
+    </style>
+</head>
+<body>
+<div class="container">
+  <div class="page-header">
+    <h1><small>Security report</small></h1>
+    <small class="text-muted">
+      <strong>Repository:</strong> <a href="{{repo.url}}">{{repo.name}}</a>,
+      <strong>PR:</strong> <a href="{{pullRequest.url}}">#{{pullRequest.id}}</a>
+    </small>
+  </div>
+
+  {{#if issues}}
+  <div class="report-confirm">
+    <div class="alert alert-warning" role="alert">
+      <p>If this report is not accurate, then let us know by clicking a button.</p>
+      <br />
+      <button type="button" class="btn btn-default btn-danger btn-sm action-report-false-positive">
+        Report a false positive
+      </button>
+    </div>
+  </div>
+
+  <div class="alert notify" role="alert">&nbsp;</div>
+  {{/if}}
+
+  {{#issues}}
+  <div class="row">
+    <h2><span class="glyphicon glyphicon-stats"></span> {{[0].filter.name}}</h2>
+    <blockquote>{{{[0].filter.error}}}</blockquote>
+  {{#each this}}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+        &nbsp;<a href="{{file.blob_url}}" target="_blank">{{file.filename}}</a>
+      </div>
+
+      <ul class="list-group">
+        {{#filter.data}}
+        <li class="list-group-item"><span class="badge alert-danger">{{entropy}}</span><code>{{obfuscate string}}</code></li>
+        {{/filter.data}}
+      </ul>
+    </div>
+  {{/each}}
+  </div>
+  {{else}}
+    <div class="alert alert-success" role="alert">
+      <span class="glyphicon glyphicon-ok"></span>
+      <strong>Well done!</strong> Our tests were successful and no issues were found.
+    </div>
+  {{/issues}}
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p class="text-muted">Repo-supervisor ({{version}})</p>
+  </div>
+</footer>
+
+<script type="text/javascript">
+  const btnReportFalsePositive = $('.action-report-false-positive');
+  const endpoint = window.location.href;
+  const elNotify = $('.notify');
+
+  function setStatus(status) {
+    switch (status) {
+      case 'error':
+        elNotify.attr('class', 'alert-danger');
+        elNotify.text('It failed, false positive not reported.');
+        break;
+
+      case 'pending':
+        elNotify.attr('class', 'alert-warning');
+        elNotify.text('Sending report status...');
+        break;
+
+      case 'success':
+        elNotify.attr('class', 'alert-success');
+        elNotify.text('Successfully reported.');
+        break;
+    }
+
+    ['alert', 'notify'].forEach(cl => elNotify.addClass(cl));
+  }
+
+  function reportFalsePositive() {
+    setStatus('pending');
+
+    $.getJSON(endpoint + '&false_positive=1', (data) => {
+      if (data && data.success) {
+        return setStatus('success');
+      }
+    }).fail(() => setStatus('error'));
+  }
+
+  if (btnReportFalsePositive) {
+    btnReportFalsePositive.click(() => {
+      reportFalsePositive();
+    });
+  }
+</script>
+</body>
+</html>
