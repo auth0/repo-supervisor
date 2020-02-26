@@ -26,5 +26,5 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
       - run:
           name: Run Tests
-          command: npm test
+          command: npm run build && npm run test
           when: always
