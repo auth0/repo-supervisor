@@ -11,3 +11,4 @@ TODO
 .vscode
 .config.json
 dist/
+.DS_Store
