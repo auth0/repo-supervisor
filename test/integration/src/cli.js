@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable no-unused-expressions */
 const exec = require('child_process').exec;
 
 const execCMD = 'node ./dist/cli.js';
