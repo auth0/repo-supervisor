@@ -11,10 +11,12 @@ const token = require('./helpers/jwt');
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const JWT_SECRET = process.env.JWT_SECRET;
 
+const returnErrorResponse = message => Promise.resolve(http.response(message, http.STATUS_CODE.ERROR));
+
 async function lambda(event) {
-  if (!GITHUB_TOKEN) { return Promise.resolve(http.response(config.responseMessages.githubTokenNotProvided, http.STATUS_CODE.ERROR)); }
-  if (!JWT_SECRET) { return Promise.resolve(http.response(config.responseMessages.jwtTokenNotProvided, http.STATUS_CODE.ERROR)); }
-  if (!event) { return Promise.resolve(http.response(config.responseMessages.lambdaEventObjectNotFound, http.STATUS_CODE.ERROR)); }
+  if (!GITHUB_TOKEN) { return returnErrorResponse(config.responseMessages.githubTokenNotProvided); }
+  if (!JWT_SECRET) { return returnErrorResponse(config.responseMessages.jwtTokenNotProvided); }
+  if (!event) { return returnErrorResponse(config.responseMessages.lambdaEventObjectNotFound); }
 
   let requestBody;
   let requestParams = {};
@@ -31,9 +33,7 @@ async function lambda(event) {
       try {
         requestBody = JSON.parse(event.body);
       } catch (e) {
-        return Promise.resolve(
-          http.response(config.responseMessages.invalidPayloadFormat, http.STATUS_CODE.ERROR)
-        );
+        return returnErrorResponse(config.responseMessages.invalidPayloadFormat);
       }
     } else {
       requestBody = event.body;
@@ -84,9 +84,7 @@ async function lambda(event) {
     return dispatcher(requestBody, event, service, view, http.response);
   }
 
-  return Promise.resolve(
-    http.response(config.responseMessages.actionNotAllowed, http.STATUS_CODE.ERROR)
-  );
+  return returnErrorResponse(config.responseMessages.actionNotAllowed);
 }
 
 exports.handler = handler(lambda);
