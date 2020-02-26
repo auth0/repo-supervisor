@@ -8,6 +8,23 @@ The Repo-supervisor is a tool that helps you to detect secrets and passwords in 
 
 It works in two separate modes. The first one allows us to scan Github pull requests, and the second one works from the command line where it scans local directories.
 
+- [Repo-supervisor](#repo-supervisor)
+  - [Usage](#usage)
+    - [Pre-requisites](#pre-requisites)
+    - [Command line mode](#command-line-mode)
+    - [Github Pull Request mode](#github-pull-request-mode)
+  - [Supported files](#supported-files)
+  - [Security checks](#security-checks)
+  - [Frequently asked questions](#frequently-asked-questions)
+    - [How does it work?](#how-does-it-work)
+    - [Why doesn't it find any secrets?](#why-doesnt-it-find-any-secrets)
+    - [How to add support for new file types?](#how-to-add-support-for-new-file-types)
+  - [What is Auth0?](#what-is-auth0)
+    - [Create a free account in Auth0](#create-a-free-account-in-auth0)
+  - [Issue Reporting](#issue-reporting)
+  - [Author](#author)
+  - [License](#license)
+
 ## Usage
 
 ### Pre-requisites
@@ -50,11 +67,11 @@ Running a tool in the pull request mode requires to add a new webhook to the Git
 
 Webhook configuration details:
 
-| Setting       | Value              |
-| --------------|--------------------|
-| Payload URL   | AWS Lambda URL     |
-| Content type  | `application/json` |
-| Events type   | `Pull requests`    |
+| Setting      | Value              |
+| ------------ | ------------------ |
+| Payload URL  | AWS Lambda URL     |
+| Content type | `application/json` |
+| Events type  | `Pull requests`    |
 
 Whenever a tool finds security issues, it sets the PR status to error, and it adds a link to view the report. Link to the report is a URL to AWS Lambda deployment with an additional query parameter `?id=<jwt>` that allows to generate the HTML report.
 
@@ -89,8 +106,8 @@ We plan to add new file types in the future. Check a [configuration file](config
 
 This is the list of currently implemented checks in a tool:
 
-| | |
-|-|-|
+| Module            | Details                                                                                    |
+| ----------------- | ------------------------------------------------------------------------------------------ |
 | **Entropy Meter** | Finds strings with a high entropy to detect secrets and passwords in supported file types. |
 
 ## Frequently asked questions
@@ -149,7 +166,7 @@ the same user.
 * Pull data from other sources and add it to the user profile, through
 [JavaScript rules](https://docs.auth0.com/rules).
 
-## Create a free account in Auth0
+### Create a free account in Auth0
 
 1. Go to [Auth0](https://auth0.com) and click Sign Up.
 2. Use Google, GitHub or Microsoft Account to login.
