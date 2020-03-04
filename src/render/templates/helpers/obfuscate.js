@@ -1,1 +1,1 @@
-export default str => str.substring(0, 8) + '*'.repeat(20);
+module.exports = str => str.substring(0, 8) + '*'.repeat(20);
