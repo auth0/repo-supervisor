@@ -7,6 +7,14 @@
     "excludedPaths": ["^test"],
     "updateGithubStatus": true
   },
+  "render": {
+    "obfuscate": {
+      "stringStartPos": 0,
+      "stringEndPos": 8,
+      "paddingLength": 20,
+      "paddingChar": "*"
+    }
+  },
   "cli": {
     "excludedPaths": ["^test", "^[.]git$"],
     "messages": {
