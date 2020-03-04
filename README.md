@@ -100,7 +100,7 @@ Repo-supervisor aims to decrease the number of false positives as much as possib
 - JSON (.json)
 - JavaScript (.js)
 
-We plan to add new file types in the future. Check a [configuration file](config/filters.json) to learn more.
+We plan to add new file types in the future. Read a documentation on [how to add a new file type](docs/add.new.file.type.md) to learn more.
 
 ## Security checks
 
