@@ -9,7 +9,7 @@ module.exports = {
 
     const ext = path.parse(metadata.filename).ext;
     const issues = [];
-    let set = filtersList.filter(f => f.ext === ext);
+    let set = filtersList.filter(f => f.ext.indexOf(ext) > -1);
 
     if (set.length > 1) {
       throw new Error(`More than one object for the same extension "${ext}" specified in a config/filters.json.`);
