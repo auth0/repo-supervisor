@@ -7,6 +7,7 @@ ENV DEBIAN_FRONTEND noninteractive
 # Install packages
 RUN apt-get update -qq && apt-get install -y \
     locales \
+    zip \
     -qq
 
 # Generate locales
