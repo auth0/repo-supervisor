@@ -1,189 +1,152 @@
 # Repo-supervisor
 
-Serverless tool that detects secrets and passwords in your pull requests - one file at a time.
-
 [![Join the chat at https://gitter.im/repo-supervisor/Lobby](https://badges.gitter.im/repo-supervisor/Lobby.svg)](https://gitter.im/repo-supervisor/Lobby)
 [![Build Status](https://travis-ci.org/auth0/repo-supervisor.svg?branch=master)](https://travis-ci.org/auth0/repo-supervisor)
 
 
-<div style="text-align:center"><img src="docs/report.preview.png"/></div>
+The Repo-supervisor is a tool that helps you to detect secrets and passwords in your code. It's as easy to install as adding a new webhook to your Github repository.
 
-## Help
+It works in two separate modes. The first one allows us to scan Github pull requests, and the second one works from the command line where it scans local directories.
 
-If you need help please visit [Wiki](https://github.com/auth0/repo-supervisor/wiki/) or [Gitter chat](https://gitter.im/repo-supervisor/Lobby).
+- [Repo-supervisor](#repo-supervisor)
+  - [Usage](#usage)
+    - [Pre-requisites](#pre-requisites)
+    - [Command line mode](#command-line-mode)
+    - [Github Pull Request mode](#github-pull-request-mode)
+  - [Supported files](#supported-files)
+  - [Security checks](#security-checks)
+  - [Frequently asked questions](#frequently-asked-questions)
+    - [How does it work?](#how-does-it-work)
+    - [Why doesn't it find any secrets?](#why-doesnt-it-find-any-secrets)
+    - [How to add support for new file types?](#how-to-add-support-for-new-file-types)
+  - [What is Auth0?](#what-is-auth0)
+    - [Create a free account in Auth0](#create-a-free-account-in-auth0)
+  - [Issue Reporting](#issue-reporting)
+  - [Author](#author)
+  - [License](#license)
 
-## Command line mode
+## Usage
 
-To start using tool without setting up webhooks etc. you can start scanning local directories right after downloading the source code:
+### Pre-requisites
 
-```bash
-npm install --no-optional
-npm run build
-npm run cli ./src/
-```
+To start using a tool, download the latest release from the Github releases page. There are two bundles available for both AWS Lambda deployment as well as for the CLI mode. Using CLI mode doesn't require any additional configuration, whereas to use the PR mode, it's necessary to deploy the bundle to AWS Lambda first.
 
-**JSON output**
+- [AWS Lambda deployment](docs/aws.lambda.deployment.md)
+- [Using a docker image](docs/docker.image.md)
 
-To trigger JSON format for the output report you need to set `JSON_OUTPUT=1` environment variable.
+### Command line mode
 
-```bash
-→ JSON_OUTPUT=1 node ./dist/cli.js ./test/fixtures/integration/dir.with.secrets/foo/ | jq
-{
-  "result": [
-    {
-      "filepath": "./test/fixtures/integration/dir.with.secrets/foo/bar.js",
-      "secrets": [
-        "zJd-55qmsY6LD53CRTqnCr_g-",
-        "gm5yb-hJWRoS7ZJTi_YUj_tbU",
-        "GxC56B6x67anequGYNPsW_-TL",
-        "MLTk-BuGS8s6Tx9iK5zaL8a_W",
-        "2g877BA_TsE-WoPoWrjHah9ta"
-      ]
-    },
-    {
-      "filepath": "./test/fixtures/integration/dir.with.secrets/foo/foo.json",
-      "secrets": [
-        "d7kyociU24P9hJ_sYVkqzo-kE",
-        "q28Wt3nAmLt_3NGpqi2qz-jQ7"
-      ]
-    }
-  ]
-}
-```
+The CLI mode allows scanning local directories with source code to detect secrets and passwords in files. That is the simplest deployment option, and it could become a part of the CI pipeline.
 
-## Docker
-
-It's possible to run Repo Supervisor inside the Docker container. It gives you more flexibility and you don't need to configure your local environment with Node.JS and npm. At first you need to build up the Docker image:
+Findings might be either returned in the plaintext or JSON format:
 
 ```bash
-docker build -t repo-supervisor .
-```
+$ npm ci && npm run build
+$ node ./dist/cli.js ./test/fixtures/integration/dir.with.secrets
 
-To run the tool inside Docker container you need to trigger a specific command:
+[./test/fixtures/integration/dir.with.secrets/foo/bar.js]
+>> zJd-55qmsY6LD53CRTqnCr_g-
+>> gm5yb-hJWRoS7ZJTi_YUj_tbU
+>> GxC56B6x67anequGYNPsW_-TL
+>> MLTk-BuGS8s6Tx9iK5zaL8a_W
+>> 2g877BA_TsE-WoPoWrjHah9ta
 
-```bash
-docker run -it --rm -v /local/path/on/your/host:/opt/scan_me repo-supervisor /bin/bash -c "source ~/.bashrc && JSON_OUTPUT=1 node /opt/repo-supervisor/dist/cli.js /opt/scan_me"
-```
+[./test/fixtures/integration/dir.with.secrets/foo/foo.json]
+>> d7kyociU24P9hJ_sYVkqzo-kE
+>> q28Wt3nAmLt_3NGpqi2qz-jQ7
 
-As a result it should return detected secrets in JSON format:
+$ JSON_OUTPUT=1 node ./dist/cli.js ./test/fixtures/integration/dir.with.secrets
 
-```
-→ docker run -it --rm -v /local/path/on/your/host:/opt/scan_me repo-supervisor /bin/bash -c "source ~/.bashrc && JSON_OUTPUT=1 node /opt/repo-supervisor/dist/cli.js /opt/scan_me"
 {"result":[{"filepath":"./test/fixtures/integration/dir.with.secrets/foo/bar.js","secrets":["zJd-55qmsY6LD53CRTqnCr_g-","gm5yb-hJWRoS7ZJTi_YUj_tbU","GxC56B6x67anequGYNPsW_-TL","MLTk-BuGS8s6Tx9iK5zaL8a_W","2g877BA_TsE-WoPoWrjHah9ta"]},{"filepath":"./test/fixtures/integration/dir.with.secrets/foo/foo.json","secrets":["d7kyociU24P9hJ_sYVkqzo-kE","q28Wt3nAmLt_3NGpqi2qz-jQ7"]}]}
 ```
 
-## Setup
 
-The recommended way is to clone this repository, install required dependencies and run script to deploy a script on the webtask.io platform.
+### Github Pull Request mode
 
-```bash
- git clone git@github.com:auth0/repo-supervisor.git
- cd repo-supervisor
+Running a tool in the pull request mode requires to add a new webhook to the Github repository. Webhook should be triggered on a pull request events whenever someone opens, updates, or closes a PR. Therefore, when a scan is triggered, it will update the PR status to either success or failure, depending on findings.
 
- npm install --no-optional
- GITHUB_TOKEN=<token> JWT_SECRET=<secret> npm run deploy
-```
+Webhook configuration details:
 
-After script was deployed it will return a URL address to your webtask which then you can use to setup a webhook.
+| Setting      | Value              |
+| ------------ | ------------------ |
+| Payload URL  | AWS Lambda URL     |
+| Content type | `application/json` |
+| Events type  | `Pull requests`    |
 
-_If you want to deploy webtask with profile different than a standard one you should set env. variable called `WT_PROFILE=myprofile` just before or right after `GITHUB_TOKEN` variable._
+Whenever a tool finds security issues, it sets the PR status to error, and it adds a link to view the report. Link to the report is a URL to AWS Lambda deployment with an additional query parameter `?id=<jwt>` that allows to generate the HTML report.
 
-## Webhook
+Check out a sample report:
 
-Installing webhook is easy and there is no difference to other webhooks provided by i.e. Zapier or IFTTT.
+<div style="text-align:center"><img src="docs/images/pr.report.review.png"/></div>
 
-Before installing a webhook you need to build and install this tool. As a result `npm run deploy` should return the URL address to your deployed webtask. Point your **Payload URL** to webtask url and you're ready to go.
+Depending on the success or failure of the scan, it will set a proper PR status.
 
-:exclamation: Please ensure that the Content type for a webhook is set to `application/json`. :exclamation:
+**Error - issues detected**
 
-<div style="text-align:center"><img src="docs/webhook.setup.png"/></div>
+<img src="docs/images/pr.ci.status.error.png"/>
 
-> Which events would you like to trigger this webhook?
+**Success - no issues were found**
 
-- [x] Let me select individual events.
-- [x] Pull request
+<img src="docs/images/pr.ci.status.success.png"/>
 
-## Requirements
+**A false positive was reported**
 
-After installing all required packages with `npm` the one additional tool is `wt-cli` to communicate with [webtask.io](https://webtask.io).
+<img src="docs/images/pr.ci.status.false.positive.png"/>
 
-If you don't have an account then create a new one, **it's free**. All details related to `wt-cli` are available in the [documentation](https://webtask.io/docs/wt-cli).
+## Supported files
 
-Installation process:
+Repo-supervisor aims to decrease the number of false positives as much as possible. It means that it doesn't scan all file types and extensions. Each file is parsed according to its format to extract strings, and this is a context-aware process that requires to use a language tokenizer. The currently supported file types are:
 
-```bash
-npm install -g wt-cli
-```
+- JSON (.json)
+- JavaScript (.js)
 
-## Introduction
-
-It happens sometimes that you can commit secrets or passwords to your repository by accident. The recommended best practice is not commit the secrets, that's obvious. But not always that obvious when you have a big merge waiting to be reviewed.
-
-This tool allows you to setup a `webhook` that waits for the Pull Requests and scans all interesting files to check for leaked secrets. Every time PR is updated it rescans latest changes and generates a report.
-
-Both acknowledge and rejection actions are triggering Slack notification which allows to whether improve or fix secrets detection rules.
-
-**Acknowledge** report (YES): Approve that report as valid, detected strings are actual secrets.
-
-**Reject** report (NO): Reject report, detected secrets are not credentials but only object identifiers, messages or other not related strings. It will help to improve the false-positives ratio.
-
+We plan to add new file types in the future. Read a documentation on [how to add a new file type](docs/add.new.file.type.md) to learn more.
 
 ## Security checks
 
-Tool is easily extendable by adding new filter and parsers for a specific format, for now we support `json` and `js` parsing.
+This is the list of currently implemented checks in a tool:
 
-- **Entropy Meter** - measures the level of entropy for extracted strings. The higher the entropy the higher probability of detecting a secret/password.
+| Module            | Details                                                                                    |
+| ----------------- | ------------------------------------------------------------------------------------------ |
+| **Entropy Meter** | Finds strings with a high entropy to detect secrets and passwords in supported file types. |
 
-## Testing
+## Frequently asked questions
 
-Testing this tool is super easy without a need to install the actual source code on the webtask platform.
+### How does it work?
 
-1\. Start local wt-cli server
+**CLI mode:**
 
-```bash
- cd repo-supervisor
- GITHUB_TOKEN=<github_token> JWT_SECRET=<random_secret> npm start
-```
+- Scan a directory provided as argument
+- Get a list of all files and return only those matching [supported extensions](#supported-files) like `*.json` or `*.js`
+- Process every supported file with a tokenizer (different one for each file type)
+- Iterate over all extracted strings and run security checks on them
+  - Entropy Meter - calculate the entropy value to see if it goes above defined threshold ([maxAllowedEntropy](config/filters/entropy.meter.json))
+- Print out detected issues either in a plain-text or JSON format
 
-It will trigger the built-in server and listen by default at `localhost` on port `7070` if not changed (env: `PORT`, `HOST`).
+**Pull Request mode:**
 
-2\. Run local `ngrok` tunnel
+- Receive a webhook payload
+- Process payload and extract all modified files
+- Iterate over each file:
+  - Use the appropriate tokenizer based on file type
+  - Extract strings from a file
+  - Run security checks on those strings
+- If tool detects issues then it sets CI status to error with a link to the report
+- If no issues were found then it sets CI status to success
 
-```bash
-ngrok http 7070
-```
+Read more on the [CI status](https://developer.github.com/v3/repos/statuses/) definition.
 
-Output:
+### Why doesn't it find any secrets?
 
-```bash
-Session Status                online
-Region                        United States (us)
-Web Interface                 http://127.0.0.1:4040
-Forwarding                    http://b1942011.ngrok.io -> localhost:7070
-Forwarding                    https://b1942011.ngrok.io -> localhost:7070
-```
+Verify that the secrets you want to find are inside supported file types. Read more in the [Supported files](#supported-files) section.
 
-3\. Setup webhook URL so it points to `ngrok` URL.
+### How to add support for new file types?
 
-[Ngrok](https://ngrok.com/) is a really useful tool, it allows you to inspect **every** request send to your ngrok's endpoint so you can verify data in/out.
+To support a new file type, you need to create a new parser. Some of the file types might require to use external tokenizers because of the complex structure like [JavaScript](src/parser/tokenizer/js/index.js) files. On the other hand, for simple file types, it's pretty straightforward as it was with [JSON](src/parser/tokenizer/json/index.js) files.
 
+Read more on how to add a [new file type](docs/add.new.file.type.md).
 
-## Dependencies
-
-All required dependencies are enforced in specific versions on the webtask.io platform by using metadata setting.
-
-```bash
---meta wt-node-dependencies=$(./bin/get.wt.deps.sh)
-```
-
-_get.wt.deps.sh_ script returns a list of dependencies extracted from `package.json` file.
-
-```bash
-→ ./bin/get.wt.deps.sh
-{"acorn":"4.0.11","bluebird":"3.4.7","github":"8.2.1","handlebars":"4.0.6","handlebars-loader":"1.4.0","jsonwebtoken":"7.3.0","lodash":"4.17.4"}
-```
-
-Without the enforcement policy it would break the installation since older version of libraries are not compatible with current code.
+---
 
 ## What is Auth0?
 
@@ -203,7 +166,7 @@ the same user.
 * Pull data from other sources and add it to the user profile, through
 [JavaScript rules](https://docs.auth0.com/rules).
 
-## Create a free account in Auth0
+### Create a free account in Auth0
 
 1. Go to [Auth0](https://auth0.com) and click Sign Up.
 2. Use Google, GitHub or Microsoft Account to login.

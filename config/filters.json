@@ -1,6 +1,6 @@
 [
   {
-    "ext": ".js",
+    "ext": [".js"],
     "filters": ["entropy.meter/index.js"],
     "parser": {
       "module": "tokenizer/js/index.js",
@@ -12,7 +12,7 @@
     }
   },
   {
-    "ext": ".json",
+    "ext": [".json"],
     "filters": ["entropy.meter/index.js"],
     "parser": {
       "module": "tokenizer/json/index.js",

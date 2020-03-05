@@ -1,4 +1,4 @@
-import Octokit from '@octokit/rest';
+const Octokit = require('@octokit/rest').Octokit;
 
 module.exports = (apiToken) => {
   const client = new Octokit({

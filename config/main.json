@@ -1,18 +1,46 @@
 {
   "name": "Supervisor",
+  "githubUrl": "https://github.com",
   "pullRequests": {
-    "allowedActions": ["opened", "synchronize"],
+    "allowedActions": ["opened", "reopened", "synchronize"],
     "allowedExtensions": [".js", ".json"],
     "excludedPaths": ["^test"],
     "updateGithubStatus": true
   },
+  "render": {
+    "obfuscate": {
+      "stringStartPos": 0,
+      "stringEndPos": 8,
+      "paddingLength": 20,
+      "paddingChar": "*"
+    }
+  },
   "cli": {
-    "excludedPaths": ["^test", "^[.]git$"]
+    "excludedPaths": ["^test", "^[.]git$"],
+    "messages": {
+      "invalidArguments": "Invalid number of arguments.",
+      "invalidDirectory": "\"%s\" is not a valid directory."
+    }
+  },
+  "statusMessages": {
+    "error": "Security issues detected, check report for additional details.",
+    "pending": "Scanning, please wait...",
+    "success": "No security issues were found.",
+    "falsePositive": "The false positive issues were already reported."
+  },
+  "responseMessages": {
+    "actionNotAllowed": "Action not allowed - payload not processed",
+    "invalidPayloadFormat": "Invalid payload format, only JSON is accepted",
+    "lambdaEventObjectNotFound": "Invalid request, event not found",
+    "githubTokenNotProvided": "GITHUB_TOKEN is not set",
+    "jwtTokenNotProvided": "JWT_SECRET is not set",
+    "invalidReportID": "Report not found, invalid ID"
   },
   "runTriggers": true,
-  "statusMessages": {
-    "error": "Security issues detected, check report for details.",
-    "pending": "We are scanning, please wait...",
-    "success": "No security issues were found, well done!"
+  "triggerTextFormat": "mrkdwn",
+  "triggerMessages": {
+    "falsePositiveReported": ":warning: False positive reported (%s): %s",
+    "slackUrlNotProvided": "SLACK_URL is not set",
+    "newIssuesDetected": ":rotating_light: New issues detected (%s): %s"
   }
 }

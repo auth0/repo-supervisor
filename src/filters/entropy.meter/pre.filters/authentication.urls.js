@@ -1,5 +1,5 @@
 /* eslint no-empty: ["error", { "allowEmptyCatch": true }] */
-import url from 'url';
+const url = require('url');
 
 /**
  * Skip all URLs but leave those with authentication parameters.

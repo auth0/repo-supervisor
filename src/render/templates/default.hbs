@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Report</title>
+    <title>Repo Supervisor - security report</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <style type="text/css">
@@ -53,19 +53,21 @@
 <div class="container">
   <div class="page-header">
     <h1><small>Security report</small></h1>
+    <small class="text-muted">
+      <strong>Repository:</strong> <a href="{{repo.url}}">{{repo.name}}</a>,
+      <strong>PR:</strong> <a href="{{pullRequest.url}}">#{{pullRequest.id}}</a>
+    </small>
   </div>
 
   {{#if issues}}
   <div class="report-confirm">
-    <p>You can make a Pull Request green if you want to skip this report. Also let us know if this report is not accurate by clicking on a second button.</p>
-
-    <button type="button" class="btn btn-default btn-success btn-sm action-yes">
-      <span class="glyphicon glyphicon-thumbs-up"></span> Make PR green
-    </button>
-
-    <button type="button" class="btn btn-default btn-warning btn-sm action-no">
-      <span class="glyphicon glyphicon-thumbs-down"></span> Report is not accurate
-    </button>
+    <div class="alert alert-warning" role="alert">
+      <p>If this report is not accurate, then let us know by clicking a button.</p>
+      <br />
+      <button type="button" class="btn btn-default btn-danger btn-sm action-report-false-positive">
+        Report a false positive
+      </button>
+    </div>
   </div>
 
   <div class="alert notify" role="alert">&nbsp;</div>
@@ -100,13 +102,12 @@
 
 <footer class="footer">
   <div class="container">
-    <p class="text-muted">Repo-supervisor.</p>
+    <p class="text-muted">Repo-supervisor ({{version}})</p>
   </div>
 </footer>
 
 <script type="text/javascript">
-  const btnYes = $('.action-yes');
-  const btnNo = $('.action-no');
+  const btnReportFalsePositive = $('.action-report-false-positive');
   const endpoint = window.location.href;
   const elNotify = $('.notify');
 
@@ -114,7 +115,7 @@
     switch (status) {
       case 'error':
         elNotify.attr('class', 'alert-danger');
-        elNotify.text('It failed, contact us directly, thanks!');
+        elNotify.text('It failed, false positive not reported.');
         break;
 
       case 'pending':
@@ -124,30 +125,26 @@
 
       case 'success':
         elNotify.attr('class', 'alert-success');
-        elNotify.text('Thanks for letting us know!');
+        elNotify.text('Successfully reported.');
         break;
     }
 
     ['alert', 'notify'].forEach(cl => elNotify.addClass(cl));
   }
 
-  function ackReport(isValid) {
+  function reportFalsePositive() {
     setStatus('pending');
 
-    $.getJSON(endpoint + '&ack_report=' + (isValid ? 1 : 0), (data) => {
+    $.getJSON(endpoint + '&false_positive=1', (data) => {
       if (data && data.success) {
         return setStatus('success');
       }
     }).fail(() => setStatus('error'));
   }
 
-  if (btnYes && btnNo) {
-    btnYes.click(() => {
-      ackReport(true);
-    });
-
-    btnNo.click(() => {
-      ackReport(false);
+  if (btnReportFalsePositive) {
+    btnReportFalsePositive.click(() => {
+      reportFalsePositive();
     });
   }
 </script>

@@ -1,5 +1,5 @@
-import * as tokenizer from 'acorn';
-import { defaults, uniq } from 'lodash';
+const tokenizer = require('acorn');
+const { defaults, uniq } = require('lodash');
 
 /**
  * Return an array of all strings from javascript file.

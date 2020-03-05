@@ -1,6 +1,6 @@
 /* eslint no-return-assign: "off" */
-import entropy from './../../lib/entropy';
-import config from './../../../config/filters/entropy.meter.json';
+const entropy = require('./../../lib/entropy');
+const config = require('./../../../config/filters/entropy.meter.json');
 
 /**
  * If rule returns TRUE then string is not removed, otherwise string is not returned on a list

@@ -1,4 +1,4 @@
-import { uniq } from 'lodash';
+const uniq = require('lodash').uniq;
 
 module.exports = ({
   groupByFilter: (issues) => {

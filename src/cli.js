@@ -1,10 +1,7 @@
-import fs from 'fs';
-import { format } from 'util';
-import filters from './filters';
-import config from './../config/main.json';
-
-const MESSAGE_MISSING_PARAMS = 'The directory argument was not provided.';
-const MESSAGE_INVALID_DIRECTORY = '"%s" is not a valid directory.';
+const fs = require('fs');
+const format = require('util').format;
+const filters = require('./filters');
+const config = require('./../config/main.json');
 
 const isJSON = !!process.env.JSON_OUTPUT;
 const excludedPaths = config.cli.excludedPaths.map(x => new RegExp(x));
@@ -34,13 +31,13 @@ const throwError = (message) => {
 };
 
 if (process.argv.length < 3) {
-  throwError(MESSAGE_MISSING_PARAMS);
+  throwError(config.cli.messages.invalidArguments);
 }
 
 const dir = process.argv[2];
 
 if (!fs.existsSync(dir) || !fs.lstatSync(dir).isDirectory()) {
-  throwError(format(MESSAGE_INVALID_DIRECTORY, dir));
+  throwError(format(config.cli.messages.invalidDirectory, dir));
 }
 
 const files = walk(dir);

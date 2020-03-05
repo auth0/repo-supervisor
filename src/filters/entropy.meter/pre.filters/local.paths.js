@@ -1,4 +1,4 @@
-import path from 'path';
+const path = require('path');
 
 /**
  * Skip strings where there is a file or directory path.

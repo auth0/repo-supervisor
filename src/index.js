@@ -1,72 +1,90 @@
+/* eslint-disable max-len */
 /* eslint consistent-return: off */
-import assert from 'assert';
-import config from './../config/main.json';
-import github from './lib/github';
-import viewer from './viewer';
-import dispatcher from './dispatcher';
-import token from './helpers/jwt';
-import trigger from './triggers/slack';
-import url from './helpers/url';
+const config = require('./../config/main.json');
+const github = require('./lib/github');
+const viewer = require('./viewer');
+const dispatcher = require('./dispatcher');
+const http = require('./helpers/http');
+const handler = require('./awslambda.handler');
+const token = require('./helpers/jwt');
 
-module.exports = (ctx, req, res) => {
-  assert(ctx.data, 'Invalid request - missing query parameters.');
-  assert(ctx.secrets, 'Secrets not set.');
-  assert(ctx.secrets.GITHUB_TOKEN, 'GITHUB_TOKEN is not set.');
-  assert(ctx.secrets.JWT_SECRET, 'JWT_SECRET is not set.');
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+const JWT_SECRET = process.env.JWT_SECRET;
 
-  const respond = (data, httpCode) => {
-    if (httpCode && Number.isSafeInteger(httpCode)) {
-      res.writeHead(httpCode);
+const returnErrorResponse = message => Promise.resolve(http.response(message, http.STATUS_CODE.ERROR));
+
+async function lambda(event) {
+  if (!GITHUB_TOKEN) { return returnErrorResponse(config.responseMessages.githubTokenNotProvided); }
+  if (!JWT_SECRET) { return returnErrorResponse(config.responseMessages.jwtTokenNotProvided); }
+  if (!event) { return returnErrorResponse(config.responseMessages.lambdaEventObjectNotFound); }
+
+  let requestBody;
+  let requestParams = {};
+
+  if (event.queryStringParameters) {
+    requestParams = {
+      isFalsePositiveReport: !!([1, '1', 'true', true].indexOf(event.queryStringParameters.false_positive) > -1),
+      reportId: event.queryStringParameters.id
+    };
+  }
+
+  if (event.body) {
+    if (typeof event.body === 'string') {
+      try {
+        requestBody = JSON.parse(event.body);
+      } catch (e) {
+        return returnErrorResponse(config.responseMessages.invalidPayloadFormat);
+      }
+    } else {
+      requestBody = event.body;
+    }
+  }
+
+  const service = github(GITHUB_TOKEN);
+  const view = viewer(JWT_SECRET, service);
+
+  if (requestParams.isFalsePositiveReport && requestParams.reportId) {
+    // Response to the ajax call in the html report
+    const success = { success: true };
+    const failure = { success: false };
+    const resp = (isSuccess = true) => Promise.resolve(http.response(
+      isSuccess ? success : failure,
+      isSuccess ? http.STATUS_CODE.SUCCESS : http.STATUS_CODE.ERROR,
+      http.HEADER.CONTENT_TYPE_JSON
+    ));
+    const jwt = token.decode(requestParams.reportId, JWT_SECRET);
+
+    if (jwt === null) {
+      return Promise.resolve(resp(false));
     }
 
-    res.end(typeof data !== 'string' ? '' : data);
-  };
-  const service = github(ctx.secrets.GITHUB_TOKEN);
-  const view = viewer(ctx.secrets.JWT_SECRET, service);
+    const payload = {
+      repository: {
+        name: jwt.repo,
+        owner: {
+          login: jwt.owner
+        }
+      },
+      pull_request: {
+        number: jwt.pullRequestId,
+        head: { sha: jwt.pullRequestSHA }
+      }
+    };
 
-  if (typeof ctx.data.ack_report !== 'undefined' && config.runTriggers) {
-    const data = token.decode(ctx.data.id, ctx.secrets.JWT_SECRET);
-    const prUrl = url.getPullRequestURLFromJWT(data);
-
-    if (ctx.data.ack_report === '1') {
-      trigger(`:white_check_mark: Report acknowledged: ${prUrl}`);
-
-      const status = require('./helpers/status')(service, {
-        repo: data.repo,
-        user: data.owner,
-        sha: data.pullRequestSHA
-      });
-
-      // Make PR green again if report was rejected.
-      return status.setSuccess(
-        `[rejected] ${config.statusMessages.success}`, url.getWebtaskURL(req)
-      ).then(() =>
-        respond(JSON.stringify({
-          success: true
-        }))
-      );
-    }
-
-    trigger(`:-1: Report rejected: ${prUrl}`);
-
-    return respond(JSON.stringify({
-      success: true
-    }));
+    return dispatcher(payload, event, service, view, http.response, true)
+      .then(resp)
+      .catch(() => resp(false));
   }
 
-  if (ctx.data.id) {
-    // Viewer request.
-    return view.getReportContent(ctx.data.id)
-      .then(respond)
-      .catch((err) => {
-        console.error(err);
-        respond('Could not process report URL.');
-      });
+  if (!requestParams.isFalsePositiveReport && requestParams.reportId) {
+    return view.getReportContent(requestParams.reportId);
   }
 
-  if (config.pullRequests.allowedActions.indexOf(ctx.data.action) > -1) {
-    return dispatcher(ctx, req, service, view, respond);
+  if (config.pullRequests.allowedActions.indexOf(requestBody.action) > -1) {
+    return dispatcher(requestBody, event, service, view, http.response);
   }
 
-  return respond('Payload not processed, invalid type.');
-};
+  return returnErrorResponse(config.responseMessages.actionNotAllowed);
+}
+
+exports.handler = handler(lambda);

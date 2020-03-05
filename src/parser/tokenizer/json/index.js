@@ -1,4 +1,4 @@
-import { flatten, uniq } from 'lodash';
+const { flatten, uniq } = require('lodash');
 
 /**
  * Workaround for not yet released lodash 5.0.

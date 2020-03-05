@@ -1,3 +1,23 @@
 {
-  "presets": ["es2015"]
+  "presets": [    
+    ["@babel/preset-env",
+      {         
+        "targets": {          
+          "node": "current"        
+        }     
+      }    
+    ]  
+  ],
+  "plugins": ["@babel/plugin-transform-runtime"],
+  "sourceType": "unambiguous",
+  "env": {
+    "development" : {
+      "compact": false
+    }
+  },
+  "ignore": [
+    "./test/**",
+    "./dist/**",
+    "./node_modules/**"
+  ]
 }

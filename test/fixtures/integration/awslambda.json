@@ -1,0 +1,22 @@
+{
+  "JWT": "eyJhbGciOiJIUzI1NiJ9.eyJyZXBvIjoiZm9vYmFyIiwib3duZXIiOiJqb2huZG9lIiwicHVsbFJlcXVlc3RJZCI6MTIzLCJwdWxsUmVxdWVzdFNIQSI6IjQwYmQwMDE1NjMwODVmYzM1MTY1MzI5ZWExZmY1YzVlY2JkYmJlZWYifQ.cPyylVrP065_gmPY3uQWs8ZNhZPeHMHPvj5pnsAF8Og",
+  "PR": {
+    "withFindings": {
+      "listFiles": [
+        {
+          "sha": "bbcd538c8e72b8c175046e27cc8f907076331401",
+          "filename": "file1.js",
+          "status": "added",
+          "additions": 103,
+          "deletions": 21,
+          "changes": 124,
+          "blob_url": "https://github.com/octocat/Hello-World/blob/6dcb09b5b57875f334f61aebed695e2e4193db5e/file1.js",
+          "raw_url": "https://github.com/octocat/Hello-World/raw/6dcb09b5b57875f334f61aebed695e2e4193db5e/file1.js",
+          "contents_url": "https://api.github.com/repos/octocat/Hello-World/contents/file1.js?ref=6dcb09b5b57875f334f61aebed695e2e4193db5e",
+          "patch": "@@ -132,7 +132,7 @@ module Test @@ -1000,7 +1000,7 @@ module Test"
+        }
+      ],
+      "getBlob": "var x = \"th1s1S4S3cr3TM3sSag3!-3@111Qweac.-+\";"
+    }
+  }
+}
