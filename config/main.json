@@ -3,7 +3,7 @@
   "githubUrl": "https://github.com",
   "pullRequests": {
     "allowedActions": ["opened", "reopened", "synchronize"],
-    "allowedExtensions": [".js", ".json"],
+    "allowedExtensions": [".js", ".json", ".yaml"],
     "excludedPaths": ["^test"],
     "updateGithubStatus": true
   },
