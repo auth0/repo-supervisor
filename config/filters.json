@@ -23,7 +23,7 @@
     }
   },
   {
-    "ext": ".yaml",
+    "ext": [".yaml", ".yml"],
     "filters": ["entropy.meter/index.js"],
     "parser": {
       "module": "tokenizer/yaml/index.js",
