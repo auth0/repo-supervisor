@@ -1,0 +1,15 @@
+spec:
+  containers:
+    - name: test-container
+      image: test.test.io/test:0.3.2
+      command: [ "sh", "-c", export, USER_ID=984267C934L692S8109S270]
+      args:
+      - while true; do
+          echo -en '\n';
+        done;
+      env:
+        - name: DB_USER
+          value: "test-user"
+        - name: DB_PASSWORD
+          value: "LE73!jd8DNo$%Mn!kSN"
+  restartPolicy: Never

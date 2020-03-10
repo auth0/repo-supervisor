@@ -1,0 +1,15 @@
+spec:
+  containers:
+    - name: test-container
+      image: test.test.io/test:0.3.2
+      command: [ "sh", "-c", export, API_KEY=iaCELgL.0imfnc4mVLWwsAawjYr4Rx-Bf50DDptlz]
+      args:
+      - while true; do
+          echo -en '\n';
+        done;
+      env:
+        - name: USER
+          value: "test_user"
+        - name: PASSWORD
+          value: "c0NhbGVpbzEyMw==83bnd2!adfiu3"
+  restartPolicy: Never
