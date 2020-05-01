@@ -10,7 +10,9 @@
     "lint": "eslint src/ config/ --quiet",
     "test": "npm run lint && mocha",
     "validate": "npm run lint && npm outdated --depth 0",
-    "watch": "./bin/webpack --config config/webpack.js --watch --bail --display-error-details"
+    "watch": "./bin/webpack --config config/webpack.js --watch --bail --display-error-details",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "author": "radekk",
   "license": "MIT",
@@ -43,6 +45,8 @@
     "lodash": "^4.17.15",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
-    "webpack-cli": "^3.3.11"
-  }
+    "webpack-cli": "^3.3.11",
+    "snyk": "^1.316.1"
+  },
+  "snyk": true
 }
