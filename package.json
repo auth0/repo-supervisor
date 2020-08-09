@@ -43,6 +43,6 @@
     "lodash": "^4.17.15",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^3.3.12"
   }
 }
