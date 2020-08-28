@@ -18,7 +18,3 @@ global.getFixtures = (filepath) => {
   const jsonPath = filepath.replace(/\/test\/(unit|integration)\//, '/test/fixtures/$1/').replace(/\.js$/, '.json');
   return require(jsonPath);
 };
-
-require('@babel/register')({
-  ignore: [/node_modules/]
-});

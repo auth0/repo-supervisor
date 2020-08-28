@@ -7,29 +7,41 @@
     "eslint:recommended",
     "airbnb-base"
   ],
-  "parser": "babel-eslint",
-  "parserOptions": {
-    "ecmaVersion": 6
-  },
   "plugins": [
-      "import"
+    "import"
   ],
   "rules": {
-    "comma-dangle": ["error", "never"],
+    "comma-dangle": [
+      "error",
+      "never"
+    ],
     "global-require": "off",
     "import/no-dynamic-require": "off",
-    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["config/webpack.js", "test/**"]}],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "config/webpack.js",
+          "test/**"
+        ]
+      }
+    ],
     "no-bitwise": "off",
     "no-console": "off",
     "no-param-reassign": "off",
     "no-plusplus": "off",
     "strict": "off",
-    "max-len": ["error", 120, 2, {
-      "ignoreUrls": true,
-      "ignoreComments": false,
-      "ignoreRegExpLiterals": true,
-      "ignoreStrings": false,
-      "ignoreTemplateLiterals": false
-    }]
+    "max-len": [
+      "error",
+      120,
+      2,
+      {
+        "ignoreUrls": true,
+        "ignoreComments": false,
+        "ignoreRegExpLiterals": true,
+        "ignoreStrings": false,
+        "ignoreTemplateLiterals": false
+      }
+    ]
   }
 }
