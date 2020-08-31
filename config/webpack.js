@@ -5,6 +5,7 @@ const webpack = require('webpack');
 const distPath = path.join(__dirname, '../dist');
 
 const config = {
+  mode: 'production',
   cache: false,
   target: 'node',
   resolve: {
@@ -24,7 +25,6 @@ const config = {
       {
         test: /\.js$/,
         exclude: [/node_modules/],
-        loader: 'babel-loader',
         enforce: 'pre'
       }
     ]
