@@ -1,6 +1,6 @@
 {
   "name": "repo-supervisor",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Scan your code for security misconfigurations, search for passwords and secrets.",
   "main": "src/index.js",
   "scripts": {
