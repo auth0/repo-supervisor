@@ -100,7 +100,7 @@ describe('Scenario: Run tool in CLI mode to detect secrets', () => {
   it('should detect secrets in supported files', (cb) => {
     const dir = './test/fixtures/integration/dir.with.secrets';
     const msg =
-`[./test/fixtures/integration/dir.with.secrets/foo/bar.js]
+      `[./test/fixtures/integration/dir.with.secrets/foo/bar.js]
 >> zJd-55qmsY6LD53CRTqnCr_g-
 >> gm5yb-hJWRoS7ZJTi_YUj_tbU
 >> GxC56B6x67anequGYNPsW_-TL
@@ -108,8 +108,8 @@ describe('Scenario: Run tool in CLI mode to detect secrets', () => {
 >> 2g877BA_TsE-WoPoWrjHah9ta
 
 [./test/fixtures/integration/dir.with.secrets/foo/foo.json]
->> d7kyociU24P9hJ_sYVkqzo-kE
 >> q28Wt3nAmLt_3NGpqi2qz-jQ7
+>> d7kyociU24P9hJ_sYVkqzo-kE
 
 [./test/fixtures/integration/dir.with.secrets/foo/foo.yaml]
 >> API_KEY=iaCELgL.0imfnc4mVLWwsAawjYr4Rx-Bf50DDptlz
@@ -128,7 +128,7 @@ describe('Scenario: Run tool in CLI mode to detect secrets', () => {
 
   it('should detect secrets in supported files - JSON response', (cb) => {
     const dir = './test/fixtures/integration/dir.with.secrets';
-    const msg = '{"result":[{"filepath":"./test/fixtures/integration/dir.with.secrets/foo/bar.js","secrets":["zJd-55qmsY6LD53CRTqnCr_g-","gm5yb-hJWRoS7ZJTi_YUj_tbU","GxC56B6x67anequGYNPsW_-TL","MLTk-BuGS8s6Tx9iK5zaL8a_W","2g877BA_TsE-WoPoWrjHah9ta"]},{"filepath":"./test/fixtures/integration/dir.with.secrets/foo/foo.json","secrets":["d7kyociU24P9hJ_sYVkqzo-kE","q28Wt3nAmLt_3NGpqi2qz-jQ7"]},{"filepath":"./test/fixtures/integration/dir.with.secrets/foo/foo.yaml","secrets":["API_KEY=iaCELgL.0imfnc4mVLWwsAawjYr4Rx-Bf50DDptlz","c0NhbGVpbzEyMw==83bnd2!adfiu3"]},{"filepath":"./test/fixtures/integration/dir.with.secrets/foo/foo.yml","secrets":["USER_ID=984267C934L692S8109S270","LE73!jd8DNo$%Mn!kSN"]}]}';
+    const msg = '{"result":[{"filepath":"./test/fixtures/integration/dir.with.secrets/foo/bar.js","secrets":["zJd-55qmsY6LD53CRTqnCr_g-","gm5yb-hJWRoS7ZJTi_YUj_tbU","GxC56B6x67anequGYNPsW_-TL","MLTk-BuGS8s6Tx9iK5zaL8a_W","2g877BA_TsE-WoPoWrjHah9ta"]},{"filepath":"./test/fixtures/integration/dir.with.secrets/foo/foo.json","secrets":["q28Wt3nAmLt_3NGpqi2qz-jQ7","d7kyociU24P9hJ_sYVkqzo-kE"]},{"filepath":"./test/fixtures/integration/dir.with.secrets/foo/foo.yaml","secrets":["API_KEY=iaCELgL.0imfnc4mVLWwsAawjYr4Rx-Bf50DDptlz","c0NhbGVpbzEyMw==83bnd2!adfiu3"]},{"filepath":"./test/fixtures/integration/dir.with.secrets/foo/foo.yml","secrets":["USER_ID=984267C934L692S8109S270","LE73!jd8DNo$%Mn!kSN"]}]}';
 
     exec(`${execCMD} ${dir}`, options, (error, stdout) => {
       expect(error).to.be.null;
