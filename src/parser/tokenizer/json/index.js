@@ -1,22 +1,18 @@
-const { flatten, uniq } = require('lodash');
+const { uniq } = require('lodash');
 
-/**
- * Workaround for not yet released lodash 5.0.
- *
- * Issue: https://github.com/auth0/repo-supervisor/issues/7
- */
-const invert = (object) => {
-  const toString = Object.prototype.toString;
-  const result = {};
+// eslint-disable-next-line max-len
+const flattenDeepObjectIntoArray = (obj, result, getKeys, getValues, maxAllowedDepth, depth = 0) => {
+  if (typeof obj !== 'object' || obj === null || depth >= maxAllowedDepth) return [];
 
-  Object.keys(object).forEach((key) => {
-    let value = object[key];
+  // eslint-disable-next-line consistent-return
+  Object.keys(obj).forEach((key) => {
+    if (getKeys) result.push(key.toString());
 
-    if (value !== null && typeof value.toString !== 'function') {
-      value = toString.call(value);
+    if (typeof obj[key] === 'object') {
+      return flattenDeepObjectIntoArray(obj[key], result, getKeys, getValues, maxAllowedDepth, ++depth);
     }
 
-    result[value] = key;
+    if (getValues) result.push((obj[key] || '').toString());
   });
 
   return result;
@@ -24,10 +20,8 @@ const invert = (object) => {
 
 /**
  * Return an array of all strings from JSON file.
- * TODO parse nested objects.
  */
 module.exports = (content, config) => {
-  const result = [];
   let json;
 
   try {
@@ -36,8 +30,7 @@ module.exports = (content, config) => {
     return [];
   }
 
-  if (config.checkObjectKeys) result.push(Object.keys(json));
-  if (config.checkObjectValues) result.push(Object.keys(invert(json)));
-
-  return uniq(flatten(result));
+  return uniq(
+    flattenDeepObjectIntoArray(json, [], config.checkObjectKeys, config.checkObjectValues, config.maxAllowedDepth)
+  );
 };

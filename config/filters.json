@@ -18,7 +18,8 @@
       "module": "tokenizer/json/index.js",
       "config": {
         "checkObjectKeys": true,
-        "checkObjectValues": true
+        "checkObjectValues": true,
+        "maxAllowedDepth": 10
       }
     }
   },
