@@ -4,6 +4,7 @@
   },
   "preFilters": [
     "whitelist.js",
+    "non.printable.characters.js",
     "authentication.urls.js",
     "css.selectors.js",
     "email.addresses.js",
