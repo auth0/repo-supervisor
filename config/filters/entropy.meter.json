@@ -18,11 +18,18 @@
     "entropyPrecision": 4,
     "maxAllowedEntropy": 4,
     "preFilters": {
+      "dictionaryWords": {
+        "requiredDictionaryWordsPercent": 0.3
+      },
       "skipPrefixes": [
-        "test-", "foobar-"
+        "test-",
+        "foobar-"
       ],
       "whitelist": [
-        "test", "foobar", "foo", "bar"
+        "test",
+        "foobar",
+        "foo",
+        "bar"
       ],
       "minStringLength": 15
     }
