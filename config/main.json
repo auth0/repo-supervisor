@@ -16,7 +16,7 @@
     }
   },
   "cli": {
-    "excludedPaths": ["^test", "^[.]git$", "^dist"],
+    "excludedPaths": ["^test", "^[.]git$", "^dist", "^package.json$", "^package-lock.json$"],
     "messages": {
       "invalidArguments": "Invalid number of arguments.",
       "invalidDirectory": "\"%s\" is not a valid directory."
