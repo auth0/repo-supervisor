@@ -13,7 +13,8 @@
     "multiple.words.js",
     "object.keys.identifiers.js",
     "skip.prefixes.js",
-    "dictionary.words.js"
+    "dictionary.words.js",
+    "regex.js"
   ],
   "options": {
     "entropyPrecision": 4,
