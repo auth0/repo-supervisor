@@ -5,7 +5,7 @@ const config = require('./../../../../config/filters/entropy.meter.json');
 
 function splitIntoWords(str) {
   // Hyphens, underscores, commas, stops and numbers
-  str = str.replace(/[-_,.|]/g, ' ')
+  str = str.replace(/[-_,.|()<>%]/g, ' ')
     .replace(/([0-9]+)/g, ' $1 ');
 
   // camelCase
