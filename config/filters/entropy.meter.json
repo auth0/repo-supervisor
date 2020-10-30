@@ -30,7 +30,16 @@
         "test",
         "foobar",
         "foo",
-        "bar"
+        "bar",
+        "abcdefghijklmnopqrstuvwxyz",
+        "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ",
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        "123456789abcdefghjkmnpqrstuvwxyz",
+        "0123456789abcdefghijklmnopqrstuvwxyz",
+        "123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ",
+        "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_",
+        "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
       ],
       "minStringLength": 15
     }
