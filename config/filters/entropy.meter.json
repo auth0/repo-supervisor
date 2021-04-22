@@ -4,6 +4,7 @@
   },
   "preFilters": [
     "whitelist.js",
+    "non.printable.characters.js",
     "authentication.urls.js",
     "css.selectors.js",
     "email.addresses.js",
@@ -12,17 +13,34 @@
     "multiple.words.js",
     "object.keys.identifiers.js",
     "skip.prefixes.js",
-    "dictionary.words.js"
+    "dictionary.words.js",
+    "regex.js"
   ],
   "options": {
     "entropyPrecision": 4,
     "maxAllowedEntropy": 4,
     "preFilters": {
+      "dictionaryWords": {
+        "requiredDictionaryWordsPercent": 0.3
+      },
       "skipPrefixes": [
-        "test-", "foobar-"
+        "test-",
+        "foobar-"
       ],
       "whitelist": [
-        "test", "foobar", "foo", "bar"
+        "test",
+        "foobar",
+        "foo",
+        "bar",
+        "abcdefghijklmnopqrstuvwxyz",
+        "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ",
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        "123456789abcdefghjkmnpqrstuvwxyz",
+        "0123456789abcdefghijklmnopqrstuvwxyz",
+        "123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ",
+        "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_",
+        "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
       ],
       "minStringLength": 15
     }
