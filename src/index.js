@@ -10,6 +10,7 @@ const token = require('./helpers/jwt');
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const JWT_SECRET = process.env.JWT_SECRET;
+const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
 const DEBUG = process.env.DEBUG;
 
 const returnErrorResponse = message => Promise.resolve(http.response(message, http.STATUS_CODE.ERROR));
@@ -100,6 +101,13 @@ async function lambda(event) {
   }
 
   if (config.pullRequests.allowedActions.indexOf(requestBody.action) > -1) {
+    if (WEBHOOK_SECRET) {
+      const signature = event.headers[service.HTTP_SIGNATURE_HEADER] || null;
+      const isSigValid = await service.webhooks.verify(WEBHOOK_SECRET, event.body, signature);
+
+      if (!isSigValid) return returnErrorResponse(config.responseMessages.invalidWebhookSecret);
+    }
+
     return dispatcher(requestBody, event, service, view, http.response);
   }
 

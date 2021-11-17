@@ -34,7 +34,8 @@
     "lambdaEventObjectNotFound": "Invalid request, event not found",
     "githubTokenNotProvided": "GITHUB_TOKEN is not set",
     "jwtTokenNotProvided": "JWT_SECRET is not set",
-    "invalidReportID": "Report not found, invalid ID"
+    "invalidReportID": "Report not found, invalid ID",
+    "invalidWebhookSecret": "Webhook secret is not valid"
   },
   "runTriggers": false,
   "triggerTextFormat": "mrkdwn",
