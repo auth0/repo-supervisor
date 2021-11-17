@@ -36,7 +36,7 @@
     "jwtTokenNotProvided": "JWT_SECRET is not set",
     "invalidReportID": "Report not found, invalid ID"
   },
-  "runTriggers": true,
+  "runTriggers": false,
   "triggerTextFormat": "mrkdwn",
   "triggerMessages": {
     "falsePositiveReported": ":warning: False positive reported (%s): %s",
