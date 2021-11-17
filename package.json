@@ -7,7 +7,7 @@
     "build": "rm ./dist/* 2> /dev/null; webpack --config config/webpack.js && npm run package",
     "cli": "node dist/cli.js",
     "lint": "eslint src/ config/ --quiet",
-    "package": "zip -j ./dist/awslambda.zip ./dist/awslambda.js",
+    "package": "zip -j ./dist/awslambda.zip ./dist/index.js",
     "test": "npm run lint && mocha",
     "validate": "npm run lint && npm outdated --depth 0",
     "watch": "./bin/webpack --config config/webpack.js --watch --bail --display-error-details"
