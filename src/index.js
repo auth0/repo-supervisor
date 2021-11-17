@@ -10,10 +10,13 @@ const token = require('./helpers/jwt');
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const JWT_SECRET = process.env.JWT_SECRET;
+const DEBUG = process.env.DEBUG;
 
 const returnErrorResponse = message => Promise.resolve(http.response(message, http.STATUS_CODE.ERROR));
 
 async function lambda(event) {
+  if (DEBUG) console.log(event);
+
   if (!GITHUB_TOKEN) { return returnErrorResponse(config.responseMessages.githubTokenNotProvided); }
   if (!JWT_SECRET) { return returnErrorResponse(config.responseMessages.jwtTokenNotProvided); }
   if (!event) { return returnErrorResponse(config.responseMessages.lambdaEventObjectNotFound); }
