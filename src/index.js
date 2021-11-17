@@ -24,6 +24,22 @@ async function lambda(event) {
   let requestBody;
   let requestParams = {};
 
+  /**
+   * It seems like there are two types of Event object headers naming conventions.
+   *
+   * REST Private API: Camel-Case
+   * REST Public API: lower-case
+   */
+  if (event.headers) {
+    const normalizedHeaders = {};
+
+    Object.keys(event.headers).forEach((id) => {
+      normalizedHeaders[id.toLowerCase()] = event.headers[id];
+    });
+
+    event.headers = normalizedHeaders;
+  }
+
   if (event.queryStringParameters) {
     requestParams = {
       isFalsePositiveReport: !!([1, '1', 'true', true].indexOf(event.queryStringParameters.false_positive) > -1),

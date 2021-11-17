@@ -6,8 +6,8 @@ module.exports = {
     if (!event.headers) return null;
 
     return url.format({
-      protocol: event.headers['X-Forwarded-Proto'],
-      host: event.headers.Host,
+      protocol: event.headers['x-forwarded-proto'],
+      host: event.headers.host,
       pathname: event.path
     }).replace(/\/+$/g, '');
   },
