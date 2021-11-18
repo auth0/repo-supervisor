@@ -101,8 +101,8 @@ async function lambda(event) {
   }
 
   if (config.pullRequests.allowedActions.indexOf(requestBody.action) > -1) {
-    if (WEBHOOK_SECRET) {
-      const signature = event.headers[service.HTTP_SIGNATURE_HEADER] || null;
+    if (WEBHOOK_SECRET && event.headers[service.HTTP_SIGNATURE_HEADER]) {
+      const signature = event.headers[service.HTTP_SIGNATURE_HEADER];
       const isSigValid = await service.webhooks.verify(WEBHOOK_SECRET, event.body, signature);
 
       if (!isSigValid) return returnErrorResponse(config.responseMessages.invalidWebhookSecret);
