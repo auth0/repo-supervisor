@@ -60,7 +60,7 @@ const cliConfigLight = Object.assign({}, config, {
 
 const lambdaConfigFull = Object.assign({}, config, {
   entry: {
-    './awslambda': './src/index.js'
+    './index': './src/index.js'
   },
   output: {
     filename: '[name].js',
@@ -71,7 +71,7 @@ const lambdaConfigFull = Object.assign({}, config, {
 
 const lambdaConfigLight = Object.assign({}, config, {
   entry: {
-    './awslambda.light': './src/index.js'
+    './index.light': './src/index.js'
   },
   output: {
     filename: '[name].js',

@@ -10,16 +10,36 @@ const token = require('./helpers/jwt');
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const JWT_SECRET = process.env.JWT_SECRET;
+const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
+const DEBUG = process.env.DEBUG;
 
 const returnErrorResponse = message => Promise.resolve(http.response(message, http.STATUS_CODE.ERROR));
 
 async function lambda(event) {
+  if (DEBUG) console.log(event);
+
   if (!GITHUB_TOKEN) { return returnErrorResponse(config.responseMessages.githubTokenNotProvided); }
   if (!JWT_SECRET) { return returnErrorResponse(config.responseMessages.jwtTokenNotProvided); }
   if (!event) { return returnErrorResponse(config.responseMessages.lambdaEventObjectNotFound); }
 
   let requestBody;
   let requestParams = {};
+
+  /**
+   * It seems like there are two types of Event object headers naming conventions.
+   *
+   * REST Private API: Camel-Case
+   * REST Public API: lower-case
+   */
+  if (event.headers) {
+    const normalizedHeaders = {};
+
+    Object.keys(event.headers).forEach((id) => {
+      normalizedHeaders[id.toLowerCase()] = event.headers[id];
+    });
+
+    event.headers = normalizedHeaders;
+  }
 
   if (event.queryStringParameters) {
     requestParams = {
@@ -81,6 +101,13 @@ async function lambda(event) {
   }
 
   if (config.pullRequests.allowedActions.indexOf(requestBody.action) > -1) {
+    if (WEBHOOK_SECRET && event.headers[service.HTTP_SIGNATURE_HEADER]) {
+      const signature = event.headers[service.HTTP_SIGNATURE_HEADER];
+      const isSigValid = await service.webhooks.verify(WEBHOOK_SECRET, event.body, signature);
+
+      if (!isSigValid) return returnErrorResponse(config.responseMessages.invalidWebhookSecret);
+    }
+
     return dispatcher(requestBody, event, service, view, http.response);
   }
 

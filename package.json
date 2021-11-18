@@ -7,7 +7,7 @@
     "build": "rm ./dist/* 2> /dev/null; webpack --config config/webpack.js && npm run package",
     "cli": "node dist/cli.js",
     "lint": "eslint src/ config/ --quiet",
-    "package": "zip -j ./dist/awslambda.zip ./dist/awslambda.js",
+    "package": "zip -j ./dist/awslambda.zip ./dist/index.js",
     "test": "npm run lint && mocha",
     "validate": "npm run lint && npm outdated --depth 0",
     "watch": "./bin/webpack --config config/webpack.js --watch --bail --display-error-details"
@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@octokit/rest": "^16.43.2",
+    "@octokit/webhooks-methods": "^2.0.0",
     "acorn": "^5.7.3",
     "an-array-of-english-words": "^1.3.1",
     "handlebars": "^4.7.7",

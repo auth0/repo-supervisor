@@ -67,12 +67,12 @@ module.exports = async (payload, event, github, viewer, res, isFalsePositiveRepo
     return Promise.resolve(res(SUCCESS_MESSAGE));
   } catch (e) {
     const httpCode = Number.isSafeInteger(e.status) ? e.status : http.STATUS_CODE.ERROR;
-    if (httpCode === 401) return res(e.stack, httpCode);
+    if (httpCode === 401) return res(e.message, httpCode);
 
     if (updateCIStatus) {
       status.setFailure(e.message);
     }
 
-    return res(e.stack, httpCode);
+    return res(e.message, httpCode);
   }
 };

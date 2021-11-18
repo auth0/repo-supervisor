@@ -6,9 +6,9 @@ module.exports = {
     if (!event.headers) return null;
 
     return url.format({
-      protocol: event.headers['X-Forwarded-Proto'],
-      host: event.headers.Host,
-      pathname: event.path
+      protocol: event.headers['x-forwarded-proto'],
+      host: event.headers.host,
+      pathname: event.rawPath
     }).replace(/\/+$/g, '');
   },
   getRepoURL: (owner, repo) => `${config.githubUrl}/${owner}/${repo}`,
