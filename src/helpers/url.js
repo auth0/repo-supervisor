@@ -8,7 +8,7 @@ module.exports = {
     return url.format({
       protocol: event.headers['x-forwarded-proto'],
       host: event.headers.host,
-      pathname: event.path
+      pathname: event.rawPath
     }).replace(/\/+$/g, '');
   },
   getRepoURL: (owner, repo) => `${config.githubUrl}/${owner}/${repo}`,
