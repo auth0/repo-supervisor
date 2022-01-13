@@ -73,5 +73,5 @@ module.exports = (content, config) => {
 
 Examples of tokenizers:
 
-- [JavaScript](src/parser/tokenizer/js/index.js)
-- [JSON](src/parser/tokenizer/json/index.js)
+- [JavaScript](/src/parser/tokenizer/js/index.js)
+- [JSON](/src/parser/tokenizer/json/index.js)
