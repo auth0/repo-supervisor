@@ -34,7 +34,7 @@
     "handlebars": "^4.7.7",
     "handlebars-loader": "^1.7.1",
     "js-yaml": "^3.14.1",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "lodash": "^4.17.21",
     "request": "^2.88.0",
     "request-promise": "^4.2.6"
