@@ -1,12 +1,11 @@
 'use strict';
 
 const dictionary = new Set(require('an-array-of-english-words'));
-
-const requiredPercent = 0.35;
+const config = require('./../../../../config/filters/entropy.meter.json');
 
 function splitIntoWords(str) {
   // Hyphens, underscores, commas, stops and numbers
-  str = str.replace(/[-_,.]/g, ' ')
+  str = str.replace(/[-_,.|()<>%]/g, ' ')
     .replace(/([0-9]+)/g, ' $1 ');
 
   // camelCase
@@ -37,5 +36,5 @@ module.exports = function filterCamelCaseWord(str) {
   );
 
   const percent = wordCount / words.length;
-  return percent < requiredPercent;
+  return percent < config.options.preFilters.dictionaryWords.requiredDictionaryWordsPercent;
 };

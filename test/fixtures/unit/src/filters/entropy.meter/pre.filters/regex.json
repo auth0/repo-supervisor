@@ -1,0 +1,15 @@
+{
+  "commonRegexPattern": [
+    "[a-z]+",
+    "[0-9]{1,2}",
+    "^test-[a-z]+$",
+    "[a-z0-9_-]",
+    "[0-9A-Fa-f]",
+    "[a-fA-F0-9]"
+  ],
+  "nonStandardRegexPattern": [
+    "[a-c]+",
+    "[1234]*",
+    "^.*$"
+  ]
+}
